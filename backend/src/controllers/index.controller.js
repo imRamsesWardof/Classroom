@@ -1,14 +1,6 @@
+import { pool } from "../classroom.db.js";
 
-export const conection = async (req, res) => {
-  res.json({
-    message: "Conection is goog :D",
-  });
+export const ping = async (req, res) => {
+  const [result] = await pool.query('Select "pong" as Conexion');
+  res.json(result);
 };
-
-export const listClasses = async (req, res) => {
-  
-  res.json({
-    message: "NICE",
-  });
-};
-
