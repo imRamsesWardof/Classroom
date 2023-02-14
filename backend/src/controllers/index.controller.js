@@ -4,3 +4,11 @@ export const conection = async (req, res) => {
     message: "Conection is goog :D",
   });
 };
+
+export const listClasses = async (req, res) => {
+  
+  res.json({
+    message: "NICE",
+  });
+};
+
