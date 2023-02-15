@@ -92,6 +92,8 @@
     "undefsafe": "^2.0.5",
     "unpipe": "^1.0.0",
     "utils-merge": "^1.0.1",
+    "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13",
     "vary": "^1.1.2"
   },
   "scripts": {
