@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import indexRoutes from "./routes/index.routes.js";
 import cors from "cors";
+import router from "./routes/index.routes.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
@@ -11,6 +12,9 @@ app.listen(4000);
 app.use(cors());
 app.use(morgan("dev"));
 app.use(indexRoutes);
+
+// Router
+app.use(router);
 
 app.use((req, res, next) => {
   res.json({

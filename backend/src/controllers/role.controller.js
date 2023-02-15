@@ -2,7 +2,6 @@ import {pool} from "../classroom.db.js"
 import { v4 as uuidv4 } from 'uuid';
 
 export const GetRoles = async (req, res) => {
-
   try {
     const [rows] = await pool.query("CALL GetRoles");
     res.send(rows[0]);
@@ -58,10 +57,10 @@ export const PostRol = async (req, res) => {
   }
 };
 
-export const PatchRol = async (req, res) => {
+export const PutRol = async (req, res) => {
   try {
     const { Id } = req.params;
-    const { Nombre} = req.body;
+    const { Nombre } = req.body;
     var IsActive = true;
     var date = new Date();
     date.toString();
@@ -73,7 +72,6 @@ export const PatchRol = async (req, res) => {
       date,
     ]);
     
-
     if (result.affectedRows === 0)
       return res.status(404).json({
         message: "Rol no encontrado",
