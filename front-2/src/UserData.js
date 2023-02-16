@@ -1,25 +1,41 @@
 
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import FormGroup from '@mui/material/FormGroup';
 import Typography from '@mui/material/Typography';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function UserData(props){
       let id = useParams()
       let route
       if (props.action === 'Post'){
         route = "/" + props.role + "/" + props.action
-        console.log(route)
       }
       else if (props.action === 'Put'){
         route = "/" + props.role + "/" + props.action + "/" + id
-        console.log(route)
       }
-      console.log(route)
+      const [password, setPassword] = useState('')
+      const [confirm, setConfirm] = useState('')
+      const [errorConfirm, setErrorConfirm] = useState('')
+
+      const checkPassword = e => {
+        if(e.target.name == 'Password'){
+          setPassword(e.target.value)
+        }
+        if(e.target.name == 'Confirm'){
+          setConfirm(e.target.value)
+        }
+      } 
+      useEffect(()=>{
+        if (password === confirm){
+          setErrorConfirm('')
+        }
+        else{
+          setErrorConfirm('La contraseña y la confirmación no son iguales, favor de verificar')
+        }}, [password, confirm])
       return (
         <Container>
           <Typography variant="h5">Añadir {props.actualCrud}</Typography>
@@ -53,6 +69,9 @@ function UserData(props){
             id="outlined-password-input"
             type="password"
             label="Contraseña"
+            onChange={checkPassword}
+            error={!!errorConfirm}
+            helperText={errorConfirm}
           />
           </Grid>
           <Grid item xs={6}>
@@ -62,6 +81,10 @@ function UserData(props){
             id="outlined-password-input"
             type="password"
             label="Confirmar Contraseña"
+            name="Confirm"
+            onChange = {checkPassword}
+            error={!!errorConfirm}
+            helperText={errorConfirm}
           />
           </Grid>
           <Grid item xs={11} >
