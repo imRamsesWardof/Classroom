@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { borderRadius } from '@mui/system';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const style = {
@@ -44,7 +43,7 @@ export default function DeleteModal(props) {
   let route = "/" + props.role + "/Delete/" + props.id
   const deleteButton = () => {
     fetch(route, {method: 'DELETE',})
-    .catch(alert("No se eliminó"))
+    .catch(e => alert("No se eliminó, debido a un error: ", e))
   }
   
   return (
