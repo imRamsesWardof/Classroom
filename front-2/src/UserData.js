@@ -10,18 +10,19 @@ import { useOutletContext, useParams } from 'react-router-dom';
 
 function UserData(props){
       let id = useParams()
-      let obj = useOutletContext()
       let route
-      if (obj.action === 'Post'){
+      if (props.action === 'Post'){
         route = "/" + props.role + "/" + props.action
+        console.log(route)
       }
-      else if (obj.action === 'Put'){
+      else if (props.action === 'Put'){
         route = "/" + props.role + "/" + props.action + "/" + id
+        console.log(route)
       }
-      
+      console.log(route)
       return (
         <Container>
-          <Typography variant="h5">Añadir {obj.actualCrud}</Typography>
+          <Typography variant="h5">Añadir {props.actualCrud}</Typography>
         <form action={route} method="post">
         <FormGroup sx={{padding: 2, borderRadius: 2, border: '1px solid', borderColor: 'primary.main'}}>
           <Grid container spacing={2}>
