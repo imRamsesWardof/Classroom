@@ -5,7 +5,8 @@ CREATE PROCEDURE `GetUser` (
 IN Rol_Id_ VARCHAR(50)
 )
 BEGIN
-SET @Id_Role = (SELECT Id FROM role WHERE Type = Rol_Id_ limit 1);
+DECLARE Id_Role
+SET Id_Role = (SELECT Id FROM role WHERE Type = Rol_Id_ limit 1);
 SELECT 
 	`user`.`Id`,
     `user`.`Name`,
@@ -17,7 +18,7 @@ SELECT
     `user`.`Date`
 FROM `classroom`.`user`
 INNER JOIN role on `role`.`Id` = `user`.`Rol_Id`
-WHERE `user`.`Rol_Id` = @Id_Role ;
+WHERE `user`.`Rol_Id` = Id_Role ;
 END
 $$
 
@@ -33,7 +34,6 @@ IN IsActive_ BIT,
 IN Date_ DATETIME
 )
 BEGIN
-SET @Id_Role = (SELECT Id FROM role WHERE Type = Rol_Id_ limit 1);
 INSERT INTO `classroom`.`user`
 (`Id`,
 `Name`,
@@ -43,7 +43,7 @@ INSERT INTO `classroom`.`user`
 `IsActive`,
 `Date`)
 VALUES
-(Id_, Name_, Username_, Password_, @Id_Role, IsActive_, Date_);
+(Id_, Name_, Username_, Password_, Rol_Id_, IsActive_, Date_);
 END
 $$
 
@@ -96,3 +96,31 @@ CALL PostUser(UUID(), 'Esparza Legaspi Regina Nicole', 'J@gmail.com', '12345', '
 CALL PostUser(UUID(), 'Flores Romo Ana Lucia', 'K@gmail.com', '12345', 'Student', 1, NOW());
 CALL PostUser(UUID(), 'Rocio Paulina Gonzales Morales ', 'p@gmail.com', '12345', 'Teacher', 1, NOW());
 CALL PostUser(UUID(), 'Juan Ramses Meza Martinez', 'r@gmail.com', '12345', 'Teacher', 1, NOW());
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE `PostUser` (
+IN Id_ VARCHAR(36),
+IN Name_ VARCHAR(100),
+IN Username_ VARCHAR(100),
+IN Password_ LONGTEXT,
+IN Role_Id_ VARCHAR(36),
+IN IsActive_ BIT,
+IN Date_ DATETIME
+
+)
+BEGIN
+INSERT INTO `classroom`.`user`
+(`Id`,
+`Name`,
+`Username`,
+`Password`,
+`Rol_Id`,
+`IsActive`,
+`Date`)
+VALUES
+(Id_, Name_, Username_, Password_, Role_Id_, IsActive_, Date_);
+END
+$$

@@ -5,6 +5,7 @@ export const GetStudent = async (req, res) => {
 
   try {
     const [rows] = await pool.query("CALL GetUser('Student')");
+    console.log(rows);
     res.send(rows[0]);
   } catch (error) {
     console.log(error)
@@ -17,13 +18,17 @@ export const GetStudent = async (req, res) => {
 export const PostStudent = async (req, res) => {
   try {
     const {Name, Username, Password} = req.body;
-    const Rol_Id = "Student"
     var IsActive = true;
     var date = new Date();
     date.toString();
     let Id = uuidv4();
 
-    const [rows] = await pool.query("CALL PostUser( ?, ?, ?, ?, ?, ?, ?)", [
+    const [result] = await pool.query("SELECT Id FROM role WHERE Type = 'Student'");
+    console.log(result);
+    const Rol_Id = result[0].Id.toString();
+    console.log(Rol_Id);
+
+    const [rows] = await pool.query("CALL PostUser(?, ?, ?, ?, ?, ?, ?)", [
       Id,
       Name,
       Username,
@@ -33,6 +38,7 @@ export const PostStudent = async (req, res) => {
       date
     ]);
     res.send({
+      "data" : rows,
       Id,
       Name,
       Username,

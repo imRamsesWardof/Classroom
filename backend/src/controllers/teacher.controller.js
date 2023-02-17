@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const GetTeacher = async (req, res) => {
 
   try {
-    const [rows] = await pool.query("CALL GetUser('Student')");
+    const [rows] = await pool.query("CALL GetUser('Teacher')");
     res.send(rows[0]);
   } catch (error) {
     console.log(error)
@@ -16,13 +16,18 @@ export const GetTeacher = async (req, res) => {
 
 export const PostTeacher = async (req, res) => {
   try {
-    const {Name, Username, Password, Rol_Id} = req.body;
+    const {Name, Username, Password} = req.body;
     var IsActive = true;
     var date = new Date();
     date.toString();
     let Id = uuidv4();
 
-    const [rows] = await pool.query("CALL PostUser( ?, ? , ?, ?, ?, ?, ?)", [
+    const [result] = await pool.query("SELECT Id FROM role WHERE Type = 'Teacher'");
+    console.log(result);
+    const Rol_Id = result[0].Id.toString();
+    console.log(Rol_Id);
+
+    const [rows] = await pool.query("CALL PostUser(?, ?, ?, ?, ?, ?, ?)", [
       Id,
       Name,
       Username,
@@ -32,7 +37,8 @@ export const PostTeacher = async (req, res) => {
       date
     ]);
     res.send({
-      Id: rows.insertId,
+      "data" : rows,
+      Id,
       Name,
       Username,
       Password,
@@ -51,31 +57,30 @@ export const PostTeacher = async (req, res) => {
 export const PutTeacher = async (req, res) => {
   try {
     const { Id } = req.params;
-    const { Name, Username, Password, Rol_Id} = req.body;
+    const { Name, Username, Password} = req.body;
     var IsActive = true;
     var date = new Date();
     date.toString();
 
-    const [result] = await pool.query("CALL PutUser( ?, ?, ?, ?, ?, ?, ?)", [
+    const [result] = await pool.query("CALL PutUser( ?, ?, ?, ?, ?, ?)", [
       Id,
       Name,
       Username,
       Password,
-      Rol_Id,
       IsActive,
       date,
     ]);
     
-    res.status(200).json({
+    /* res.status(200).json({
       message: "Usuario actualizado",
-    });
+    }); */
 
-    /* if (result.affectedRows === 0)
+    if (result.affectedRows === 0)
       return res.status(404).json({
         message: "Rol no encontrado",
       });
-    const [rows] = await pool.query("CALL GetRol (?)", [Id]);
-    res.json(rows[0]); */
+    const [rows] = await pool.query("select * from user where Id = ?", [Id]);
+    res.json(rows[0]);
   } catch (error) {
     return res.status(500).json({
       message: "Something goes wrong",
