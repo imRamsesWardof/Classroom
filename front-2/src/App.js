@@ -1,11 +1,63 @@
-import './styles/App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Aplicacion de React.js</h1>
-    </div>
-  );
+import React from 'react';
+import { Outlet, Link, Routes, Route} from "react-router-dom";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import MenuItem from '@mui/material/MenuItem';
+import AppAdmin from './AppAdmin';
+import AdminLayout from './AdminLayout';
+import UserData from './UserData';
+import AddClass from './AddClass';
+import DeleteModal from './DeleteModal';
+import MenuAdmin from './MenuAdmin';
+
+class App extends React.Component{
+    render(){
+        return(<>
+            <AppBar position="static">
+            <Toolbar>
+            <MenuItem component={Link} to="/Admin" key="Admin">
+                <Typography textAlign="center">Administrador</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to="/Teachers" key="Teachers">
+                <Typography textAlign="center">Maestros</Typography>
+            </MenuItem>
+            
+            <MenuItem component={Link} to="/Students" key="Students">
+                <Typography textAlign="center">Estudiantes</Typography>
+            </MenuItem>
+        </Toolbar>
+        </AppBar>
+      <Routes>
+        <Route path="/" element={<h1>Default Page</h1>}></Route>
+        <Route path="/Home" element={<h1>Home Page</h1>}></Route>
+        <Route path="/Login" element={<h1>Login Page</h1>}></Route>
+        <Route path="/Register" element={<h1>Register Page</h1>}></Route>
+        <Route path="/Test" element={<h1>Test Page</h1>}></Route>
+        <Route path="/*" element={<h1>Error Page</h1>}></Route>
+        <Route path="/Admin" element={<AdminLayout/>}>
+          <Route index element={<Typography textAlign="center"> Bienvenido Admin</Typography>}></Route>
+          <Route path="Classes" element={<AppAdmin actualCrud="Clase"/>}>
+            <Route path='Add' element={<AddClass/>}></Route>
+          </Route>
+          <Route path="Teachers" element={<AppAdmin actualCrud="Teacher"/>}>
+            <Route index element={<MenuAdmin role="Teachers"/>}></Route>
+            <Route path='Add' element={<UserData role="Teacher" action="Post"/>}></Route>
+            <Route path='Edit/:id' element={<UserData role="Teacher" action="Put"/>}></Route>
+          </Route>
+          <Route path="Students" element={<AppAdmin actualCrud="Student"/>}>
+            <Route index element={<MenuAdmin role="Students"/>}></Route>
+            <Route path='Add' element={<UserData role="Student" action="Post"/>}></Route>
+            <Route path='Edit/:id' element={<UserData role="Student" action="Put"/>}></Route>
+            <Route path='Delete/:id' element={<DeleteModal role="Student" id="1" name="Hola"/>}></Route>
+          </Route>
+        </Route>
+      </Routes>
+    <Outlet />
+        </>)
+    }
 }
+
 
 export default App;
