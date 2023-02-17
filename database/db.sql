@@ -9,7 +9,7 @@ USE `Classroom` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Classroom`.`Role` (
   `Id` VARCHAR(36) NOT NULL,
-  `Type` VARCHAR(50) NULL,
+  `Type` VARCHAR(50) UNIQUE NOT NULL,
   `IsActive` BIT NULL,
   `Date` DATETIME NULL,
   PRIMARY KEY (`Id`))

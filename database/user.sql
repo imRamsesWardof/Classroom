@@ -1,25 +1,12 @@
-INSERT INTO `classroom`.`role`
-(`Id`,
-`Type`,
-`IsActive`,
-`Date`)
-VALUES
-('e8140b40-abe4-11ed-82cc-ace2d36b47fa', 'Teacher', 1, NOW());
-
-
-INSERT INTO `classroom`.`role`
-(`Id`,
-`Type`,
-`IsActive`,
-`Date`)
-VALUES
-('dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 'Student', 1, NOW());
+USE classroom
 
 DELIMITER $$
 CREATE PROCEDURE `GetUser` (
-IN Rol_Id_ VARCHAR(36)
+IN Rol_Id_ VARCHAR(50)
 )
 BEGIN
+DECLARE Id_Role
+SET Id_Role = (SELECT Id FROM role WHERE Type = Rol_Id_ limit 1);
 SELECT 
 	`user`.`Id`,
     `user`.`Name`,
@@ -31,10 +18,9 @@ SELECT
     `user`.`Date`
 FROM `classroom`.`user`
 INNER JOIN role on `role`.`Id` = `user`.`Rol_Id`
-WHERE `user`.`Rol_Id` = Rol_Id_;
+WHERE `user`.`Rol_Id` = Id_Role ;
 END
 $$
-
 
 DELIMITER $$
 CREATE PROCEDURE `PostUser` (
@@ -60,25 +46,12 @@ VALUES
 END
 $$
 
-CALL PostUser(UUID(), 'Garcia Romo Quetzaly Emileth', 'A@gmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'Carlos Roman Alexa Nicole', 'Bgmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'Cisneros Garcia Danna Elizabeth', 'C@gmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'Cortes Almaguer Leonardo Ezau', 'D@gmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'Cruz Lopez Jorge Angel', 'E@gmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'De Lira Delgado Dibanhi', 'G@gmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'De Luna Roldan Elliot Fernando', 'H@gmail.com',  '12345','dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'Diaz Garza Alan Ezequiel', 'I@gmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'Esparza Legaspi Regina Nicole', 'J@gmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-CALL PostUser(UUID(), 'Flores Romo Ana Lucia', 'K@gmail.com', '12345', 'dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 1, NOW());
-
-
 DELIMITER $$
 CREATE PROCEDURE `PutUser` (
 IN Id_ VARCHAR(36),
 IN Name_ VARCHAR(100),
 IN Username_ VARCHAR(100),
 IN Password_ LONGTEXT,
-IN Rol_Id_ VARCHAR(36),
 IN IsActive_ BIT,
 IN Date_ DATETIME
 )
@@ -88,7 +61,6 @@ SET
 `Name` = IFNULL(Name_, Name),
 `Username` = IFNULL(Username_, Username),
 `Password` = IFNULL(Password_, Password),
-`Rol_Id` = IFNULL(Rol_Id_, Rol_Id),
 `IsActive` = IFNULL(IsActive_, IsActive),
 `Date` = IFNULL(Date_, Date)
 WHERE `Id` = Id_;
@@ -112,20 +84,3 @@ END
 $$
 
 
---CLASS DETAILS     
-DELIMITER $$
-CREATE PROCEDURE `GetClassDetails` (
-IN Class_Id VARCHAR(36)
-)
-BEGIN
-SELECT 
-U.Id,
-U.Name,
-U.Username
-FROM class as C
-INNER JOIN assignment as A on A.Class_Id = C.Id
-INNER JOIN user as U on U.Id = A.User_Id
-WHERE C.Id = Class_Id
-ORDER BY U.Name;
-END
-$$
