@@ -6,7 +6,9 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import FormGroup from '@mui/material/FormGroup';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
 import { useParams } from 'react-router-dom';
+import { CardContent, CardHeader } from '@mui/material';
 
 function UserData(props){
       let id = useParams()
@@ -17,6 +19,21 @@ function UserData(props){
       else if (props.action === 'Put'){
         route = "/" + props.role + "/" + props.action + "/" + id
       }
+      let rol
+      if(props.role == 'Teacher'){
+        rol = 'Maestro'
+      }
+      if(props.role == 'Student'){
+        rol = 'Estudiante'
+      }
+      let accion
+      if(props.action == 'Post'){
+        accion = "Añadir "
+      }
+      if(props.action == 'Put'){
+        accion = "Actualizar "
+      }
+      let title = accion + rol
       const [password, setPassword] = useState('')
       const [confirm, setConfirm] = useState('')
       const [errorConfirm, setErrorConfirm] = useState('')
@@ -37,11 +54,12 @@ function UserData(props){
           setErrorConfirm('La contraseña y la confirmación no son iguales, favor de verificar')
         }}, [password, confirm])
       return (
-        <Container>
-          <Typography variant="h5">Añadir {props.actualCrud}</Typography>
+        <Card>
+          <CardHeader title={title}></CardHeader>
+          <CardContent m={2} >
         <form action={route} method="post">
         <FormGroup sx={{padding: 2, borderRadius: 2, border: '1px solid', borderColor: 'primary.main'}}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} p={2}>
           <Grid item xs={12}>
             <TextField
             name='Name'
@@ -96,7 +114,9 @@ function UserData(props){
         </Grid>
         </FormGroup>
         </form>
-        </Container>
+          </CardContent>
+        
+        </Card>
         
       );
 

@@ -10,6 +10,7 @@ import AdminLayout from './AdminLayout';
 import UserData from './UserData';
 import AddClass from './AddClass';
 import DeleteModal from './DeleteModal';
+import MenuAdmin from './MenuAdmin';
 
 class App extends React.Component{
     render(){
@@ -41,10 +42,12 @@ class App extends React.Component{
             <Route path='Add' element={<AddClass/>}></Route>
           </Route>
           <Route path="Teachers" element={<AppAdmin actualCrud="Teacher"/>}>
+            <Route index element={<MenuAdmin role="Teachers"/>}></Route>
             <Route path='Add' element={<UserData role="Teacher" action="Post"/>}></Route>
             <Route path='Edit/:id' element={<UserData role="Teacher" action="Put"/>}></Route>
           </Route>
           <Route path="Students" element={<AppAdmin actualCrud="Student"/>}>
+            <Route index element={<MenuAdmin role="Students"/>}></Route>
             <Route path='Add' element={<UserData role="Student" action="Post"/>}></Route>
             <Route path='Edit/:id' element={<UserData role="Student" action="Put"/>}></Route>
             <Route path='Delete/:id' element={<DeleteModal role="Student" id="1" name="Hola"/>}></Route>
