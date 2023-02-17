@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const GetTeacher = async (req, res) => {
 
   try {
-    const [rows] = await pool.query("CALL GetUser ('e8140b40-abe4-11ed-82cc-ace2d36b47fa')");
+    const [rows] = await pool.query("CALL GetUser('Student')");
     res.send(rows[0]);
   } catch (error) {
     console.log(error)
