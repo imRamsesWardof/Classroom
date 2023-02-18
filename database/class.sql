@@ -1,9 +1,8 @@
 DELIMITER //
 CREATE PROCEDURE GetClasses()
 BEGIN
-	SELECT c.*, u.name AS Teacher_Name FROM class c
-    INNER JOIN user u ON c.Teacher_Id = u.Id
-    WHERE c.IsActive = 1;
+	SELECT title AS name, id as value FROM class c
+    WHERE IsActive = 1;
 END //
 DELIMITER ;
 
