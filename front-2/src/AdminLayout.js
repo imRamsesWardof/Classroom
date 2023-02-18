@@ -1,10 +1,9 @@
 import React from 'react';
-import { Outlet, Link, Routes, Route} from "react-router-dom";
+import { Outlet, Link} from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
-import AppAdmin from './AppAdmin';
 
 class AdminLayout extends React.Component{
     render(){

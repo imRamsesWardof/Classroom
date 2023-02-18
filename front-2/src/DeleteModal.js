@@ -24,7 +24,6 @@ export default function DeleteModal(props) {
   const [open, setOpen] = React.useState(false);
   const [translated, setTranslated] = React.useState('');
 
-  let type_spanish
   const handleOpen = () => {
     setOpen(true)
     switch(props.role){
@@ -37,12 +36,24 @@ export default function DeleteModal(props) {
       case "Class":
         setTranslated("Clase")
         break;
+      default:
+        setTranslated("")
+        break;
+
     }
   };
   const handleClose = () => setOpen(false);
   let route = "/" + props.role + "/Delete/" + props.id
   const deleteButton = () => {
     fetch(route, {method: 'DELETE',})
+    .then(response => {
+      if (!response.ok) {
+        alert("Something went wrong")
+      }
+      else {
+        setOpen(false);
+      }
+    })
     .catch(e => alert("No se eliminó, debido a un error: ", e))
   }
   
