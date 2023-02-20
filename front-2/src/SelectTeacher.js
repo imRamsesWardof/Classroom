@@ -7,7 +7,6 @@ import Select from '@mui/material/Select';
 
 export default function SelectTeacher(props) {
   let list = []
-  console.log(props.teacherId)
   fetch("/Teacher/Get", {method : "GET"})
     .then((response) => {return response.json()})
     .then((data) =>{ 
@@ -16,7 +15,6 @@ export default function SelectTeacher(props) {
       });
     })
     .catch((error)=>console.log(error))
-  console.log(props.teacherId)
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -26,12 +24,13 @@ export default function SelectTeacher(props) {
           name='Teacher_Id'
           labelId="select-teacher-lable"
           id="select-teacher"
-          defaultValue={props.teacherId}
+          value={props.teacherId ? props.teacherId : ""}
           label="Maestro"
           onChange={e => {props.onChange(e.target.value)}}
           
-        >
-          <MenuItem value="">Seleccione las opciones</MenuItem>
+        ><MenuItem value="">
+          <em>None</em>
+          </MenuItem>
           {list}
         </Select>
       </FormControl>
