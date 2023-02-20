@@ -41,26 +41,32 @@ function AddClass(props){
   const [errorDate, setErrorDate] = useState('')
   
   useEffect(() => {
+    console.log("inicio")
+    console.log(title)
+    console.log(description)
+    console.log(teacherid)
+    console.log(errorDate)
     if (dayjs(startDate).toDate().getTime() > dayjs(endDate).toDate().getTime()){
       setErrorDate("La fecha de finalización se muestra que es antes de la de inicio, favor de verificar")
     }
     else{
       setErrorDate('')
     }
-    if(title === '' || description === '' || teacherid === "" || errorDate === ''){
+    if(title === '' || description === '' || teacherid === "" || errorDate !== ''){
       setDisabled(true)
     }
     else{
       setDisabled(false)
     }
-  }, [title, description, teacherid, startDate, endDate])
+  }, [title, description, teacherid, startDate, endDate, errorDate])
   const handleSubmit = (e) => {
     e.preventDefault()
-    let requestData = JSON.stringify({ "Title": title,
-     "Description": description, 
-     "Teacher_Id": teacherid, 
-     "StartDate": dayjs(startDate).toDate(), 
-     "EndDate": dayjs(endDate).toDate() })
+    let requestData = JSON.stringify({ 
+      "Title": title,
+      "Description": description, 
+      "User_Id": teacherid, 
+      "StartDate": dayjs(startDate).toDate(), 
+      "EndDate": dayjs(endDate).toDate() })
     if (props.action === 'Put') {
       fetch(route, {
         method: 'PUT',

@@ -6,6 +6,7 @@ import teacherRoutes from "./routes/teacher.routes.js";
 import roleRoutes from "./routes/role.routes.js";
 import classRoutes from "./routes/class.routes.js";
 import cors from "cors";
+import router from "./routes/index.routes.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +20,9 @@ app.use('/Student',studentRoutes);
 app.use('/Teacher',teacherRoutes);
 app.use('/Role',roleRoutes);
 app.use('/Class', classRoutes);
+
+// Router
+app.use(router);
 
 app.use((req, res, next) => {
   res.json({

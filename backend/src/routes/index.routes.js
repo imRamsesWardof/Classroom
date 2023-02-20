@@ -1,16 +1,10 @@
 import { Router } from "express"; 
-import { ping } from '../controllers/index.controller.js'
+import { ping } from '../controllers/index.controller.js';
+import classRoutes from "./class.routes.js"
 
-const router = Router()
+const router = Router();
 
 router.get('/ping', ping);
-
-
-// CLASS ROUTES:
-router.get('/class/get');
-router.post('/class/insert');
-router.post('/class/put/:id');
-router.post('/class/delete/:id');
-router.post('/class/assign');
+router.use('/Class', classRoutes);
 
 export default router
