@@ -40,7 +40,9 @@ class App extends React.Component{
         <Route path="/Admin" element={<AdminLayout/>}>
           <Route index element={<Typography textAlign="center"> Bienvenido Admin</Typography>}></Route>
           <Route path="Classes" element={<AppAdmin actualCrud="Clase"/>}>
-            <Route path='Add' element={<AddClass/>}></Route>
+            <Route index element={<MenuAdminStudent role="Classes"/>}></Route>
+            <Route path='Add' element={<AddClass action="Post"/>}></Route>
+            <Route path='Edit/:id' element={<AddClass action="Put"/>}></Route>
           </Route>
           <Route path="Teachers" element={<AppAdmin actualCrud="Teacher"/>}>
             <Route index element={<MenuAdminTeacher role="Teachers"/>}></Route>

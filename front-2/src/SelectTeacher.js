@@ -5,9 +5,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SelectTeacher() {
-  const [teacher, setTeacher] = React.useState("");
+export default function SelectTeacher(props) {
   let list = []
+  console.log(props.teacherId)
   fetch("/Teacher/Get", {method : "GET"})
     .then((response) => {return response.json()})
     .then((data) =>{ 
@@ -16,9 +16,7 @@ export default function SelectTeacher() {
       });
     })
     .catch((error)=>console.log(error))
-  const handleChange = (event) => {
-    setTeacher(event.target.value);
-  };
+  console.log(props.teacherId)
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -28,12 +26,12 @@ export default function SelectTeacher() {
           name='Teacher_Id'
           labelId="select-teacher-lable"
           id="select-teacher"
-          defaultValue={""}
-          value={teacher}
+          defaultValue={props.teacherId}
           label="Maestro"
-          onChange={handleChange}
+          onChange={e => {props.onChange(e.target.value)}}
           
         >
+          <MenuItem value="">Seleccione las opciones</MenuItem>
           {list}
         </Select>
       </FormControl>

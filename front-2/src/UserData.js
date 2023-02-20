@@ -38,10 +38,10 @@ function UserData(props) {
     accion = "Actualizar "
   }
   let title = accion + rol
-  const [password, setPassword] = useState('')
-  const [confirm, setConfirm] = useState('')
-  const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState(data ? data.password : "")
+  const [confirm, setConfirm] = useState(data ? data.password : "")
+  const [name, setName] = useState(data ? data.name : "")
+  const [username, setUsername] = useState(data ? data.username : "")
   const [errorConfirm, setErrorConfirm] = useState('')
   const [disabled, setDisabled] = useState(true)
   const checkPassword = e => {
@@ -60,11 +60,9 @@ function UserData(props) {
       setErrorConfirm('La contraseña y la confirmación no son iguales, favor de verificar')
     }
     if(password === '' || name === '' || username === '' || errorConfirm !== ''){
-      console.log("still disabled")
       setDisabled(true)
     }
     else{
-      console.log("not disabled")
       setDisabled(false)
     }
   }, [password, confirm, name, username, errorConfirm])
@@ -104,7 +102,6 @@ function UserData(props) {
             alert("Something went wrong")
           }
           else {
-            console.log(response)
             navigate(`/Admin/` + props.role + "s");
           }
         })
@@ -128,7 +125,7 @@ function UserData(props) {
                   fullWidth
                   id="outlined-required"
                   label="Nombre"
-                  defaultValue={data ? data.name : ""}
+                  defaultValue={name}
                   onChange={e => setName(e.target.value)}
                 />
               </Grid>
@@ -140,7 +137,7 @@ function UserData(props) {
                   id="username"
                   label="Usuario"
                   type="email"
-                  defaultValue={data ? data.username : ""}
+                  defaultValue={username}
                   onChange={e => setUsername(e.target.value)}
                 />
               </Grid>
@@ -152,7 +149,7 @@ function UserData(props) {
                   id="outlined-password-input"
                   type="password"
                   label="Contraseña"
-                  defaultValue={data ? data.password : ""}
+                  defaultValue={password}
                   onChange={checkPassword}
                   error={!!errorConfirm}
                   helperText={errorConfirm}
@@ -169,7 +166,7 @@ function UserData(props) {
                   onChange={checkPassword}
                   error={!!errorConfirm}
                   helperText={errorConfirm}
-                  defaultValue={data ? data.password : ""}
+                  defaultValue={password}
                 />
               </Grid>
               <Grid item xs={11} >

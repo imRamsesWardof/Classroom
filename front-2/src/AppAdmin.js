@@ -3,11 +3,8 @@ import React from 'react';
 import { Outlet} from "react-router-dom";
 class AppAdmin extends React.Component {
   render(){
-    console.log(this.props.actualCrud)
-    return (<><div>      
-        {}
-      </div>
-        <Outlet context={{actualCrud: this.props.actualCrud}}/>
+    return (<>
+        <Outlet/>
         </>
     );
   }
