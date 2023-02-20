@@ -1,51 +1,36 @@
 import {pool} from "../classroom.db.js"
 import { v4 as uuidv4 } from 'uuid';
 
-export const GetRoles = async (req, res) => {
+export const GetRole = async (req, res) => {
   try {
-    const [rows] = await pool.query("CALL GetRoles");
+    const [rows] = await pool.query("CALL GetRole");
     res.send(rows[0]);
   } catch (error) {
     console.log(error)
     return res.status(500).json({
-      message: "Something goes wrong trying to GetRoles",
+      message: "Something goes wrong trying to GetRole",
     });
   }
 }
 
-export const GetRol = async (req, res) => {
-  try {
-    const [rows] = await pool.query("CALL GetRol (?)", [req.params.Id]);
 
-    if (rows[0].length <= 0)
-      return res.status(404).json({
-        message: "Rol no encontrado",
-      });
-    res.send(rows[0]);
-  } catch (error) {
-    return res.status(500).json({
-      message: "Something goes wrong",
-    });
-  }
-};
-
-export const PostRol = async (req, res) => {
+export const PostRole = async (req, res) => {
   try {
-    const {Nombre} = req.body;
+    const {Type} = req.body;
     var IsActive = true;
     var date = new Date();
     date.toString();
     let Id = uuidv4();
 
-    const [rows] = await pool.query("CALL PostRol( ?, ?, ?, ?)", [
+    const [rows] = await pool.query("CALL PostRole( ?, ?, ?, ?)", [
       Id,
-      Nombre,
+      Type,
       IsActive,
       date
     ]);
     res.send({
       Id: rows.insertId,
-      Nombre,
+      Type,
       IsActive,
       date
     });
@@ -57,27 +42,30 @@ export const PostRol = async (req, res) => {
   }
 };
 
-export const PutRol = async (req, res) => {
+export const PutRole = async (req, res) => {
   try {
     const { Id } = req.params;
-    const { Nombre } = req.body;
+    const { Type} = req.body;
     var IsActive = true;
     var date = new Date();
     date.toString();
 
-    const [result] = await pool.query("CALL PatchRol( ?, ?, ?, ?)", [
+    const [result] = await pool.query("CALL PutRole( ?, ?, ?, ?)", [
       Id,
-      Nombre,
+      Type,
       IsActive,
       date,
     ]);
     
-    if (result.affectedRows === 0)
+
+   /*  if (result.affectedRows === 0)
       return res.status(404).json({
         message: "Rol no encontrado",
       });
-    const [rows] = await pool.query("CALL GetRol (?)", [Id]);
-    res.json(rows[0]);
+    const [rows] = await pool.query("CALL GetRol (?)", [Id]); */
+    res.status(200).json({
+      message: "Role actualizado",
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Something goes wrong",
@@ -85,13 +73,13 @@ export const PutRol = async (req, res) => {
   }
 };
 
-export const DeleteRol = async (req, res) => {
+export const DeleteRole = async (req, res) => {
   try {
     var IsActive = false;
     var date = new Date();
     date.toString();
 
-    const [result] = await pool.query("CALL DeleteRol(?, ?, ?)", [
+    const [result] = await pool.query("CALL DeleteRole(?, ?, ?)", [
       req.params.Id,
       IsActive,
       date,
