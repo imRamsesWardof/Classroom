@@ -23,6 +23,7 @@ function AddClass(props){
     route = "/Class/" + props.action
   }
   else if (props.action === 'Put') {
+    console.log(id)
     route = "/Class/" + props.action + "/" + id
   }
   let accion
@@ -32,35 +33,44 @@ function AddClass(props){
   if (props.action === 'Put') {
     accion = "Actualizar "
   }
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [teacherid, setTeacherId] = useState("")
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+  const [title, setTitle] = useState(data ? data.Title : '')
+  const [description, setDescription] = useState(data ? data.Description : '')
+  const [teacherid, setTeacherId] = useState(data ? data.TeacherId : '')
+  const [startDate, setStartDate] = useState(data ? data.StartDate : new Date())
+  const [endDate, setEndDate] = useState(data ? data.EndDate : new Date())
   const [disabled, setDisabled] = useState(true)
   const [errorDate, setErrorDate] = useState('')
-  
+
   useEffect(() => {
+    console.log("Inicio")
+    console.log(title)
+    console.log(description)
+    console.log(teacherid)
+    console.log(startDate)
+    console.log(endDate)
+    console.log(disabled)
+    console.log(errorDate)
     if (dayjs(startDate).toDate().getTime() > dayjs(endDate).toDate().getTime()){
       setErrorDate("La fecha de finalización se muestra que es antes de la de inicio, favor de verificar")
     }
     else{
       setErrorDate('')
     }
-    if(title === '' || description === '' || teacherid === "" || errorDate === ''){
+    if(title === '' || description === '' || teacherid === "" || errorDate !== ''){
       setDisabled(true)
     }
     else{
       setDisabled(false)
     }
-  }, [title, description, teacherid, startDate, endDate])
+  }, [title, description, teacherid, startDate, endDate, errorDate])
   const handleSubmit = (e) => {
     e.preventDefault()
-    let requestData = JSON.stringify({ "Title": title,
-     "Description": description, 
-     "Teacher_Id": teacherid, 
-     "StartDate": dayjs(startDate).toDate(), 
-     "EndDate": dayjs(endDate).toDate() })
+    let requestData = JSON.stringify({ 
+      "Title": title,
+      "Description": description, 
+      "User_Id": teacherid, 
+      "StartDate": dayjs(startDate).toDate(), 
+      "EndDate": dayjs(endDate).toDate() })
     if (props.action === 'Put') {
       fetch(route, {
         method: 'PUT',
@@ -119,10 +129,11 @@ function AddClass(props){
             id="outlined-required"
             label="Título"
             onChange={e=>setTitle(e.target.value)}
+            defaultValue={title}
             />
           </Grid>
           <Grid item xs={12}>
-            <SelectTeacher fullWidth onChange={(data) => setTeacherId(data)} teacherId={data ? data.TeacherId : ''}/>
+            <SelectTeacher fullWidth onChange={(data) => setTeacherId(data)} teacherId={teacherid}/>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -133,7 +144,7 @@ function AddClass(props){
             label="Descripción"
             multiline
             maxRows={4}
-            defaultValue={data ? data.Description : ""}
+            defaultValue={description}
             onChange={e=>setDescription(e.target.value)}
             />
           </Grid><Grid item xs={6}>
