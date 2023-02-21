@@ -23,6 +23,7 @@ function AddClass(props){
     route = "/Class/" + props.action
   }
   else if (props.action === 'Put') {
+    console.log(id)
     route = "/Class/" + props.action + "/" + id
   }
   let accion
@@ -39,12 +40,15 @@ function AddClass(props){
   const [endDate, setEndDate] = useState(data ? data.EndDate : new Date())
   const [disabled, setDisabled] = useState(true)
   const [errorDate, setErrorDate] = useState('')
-  
+
   useEffect(() => {
-    console.log("inicio")
+    console.log("Inicio")
     console.log(title)
     console.log(description)
     console.log(teacherid)
+    console.log(startDate)
+    console.log(endDate)
+    console.log(disabled)
     console.log(errorDate)
     if (dayjs(startDate).toDate().getTime() > dayjs(endDate).toDate().getTime()){
       setErrorDate("La fecha de finalización se muestra que es antes de la de inicio, favor de verificar")
