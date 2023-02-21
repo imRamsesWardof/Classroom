@@ -13,15 +13,15 @@ INSERT INTO `classroom`.`role`
 `Date`)
 VALUES
 ('dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 'Student', 1, NOW());
-USE classroom
+
 
 DELIMITER $$
 CREATE PROCEDURE `GetUser` (
 IN Rol_Id_ VARCHAR(50)
 )
 BEGIN
-DECLARE Id_Role
-SET Id_Role = (SELECT Id FROM role WHERE Type = Rol_Id_ limit 1);
+DECLARE Id_Role VARCHAR(36);
+SET Id_Role = (SELECT Id FROM role WHERE Type = Rol_Id_);
 SELECT 
 	`user`.`Id`,
     `user`.`Name`,
@@ -35,7 +35,6 @@ FROM `classroom`.`user`
 INNER JOIN role on `role`.`Id` = `user`.`Rol_Id`
 WHERE `user`.`Rol_Id` = Id_Role ;
 END
-$$
 
 DELIMITER $$
 CREATE PROCEDURE `PostUser` (
@@ -97,5 +96,3 @@ SET
 WHERE `Id` = Id_;
 END
 $$
-
-
