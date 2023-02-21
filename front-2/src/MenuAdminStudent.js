@@ -10,7 +10,8 @@ export default function MenuAdminStudent(props) {
     <Button 
       component={Link} 
       to={main_route + role + "/Edit/4330bb8f-bf61-4fae-bf1f-994159c0b8e9"} 
-      state={{name: "estudianteEstrella",
+      state={{
+        name: "estudianteEstrella",
         username: "adf@gma",
         password: "esd"}
       }
