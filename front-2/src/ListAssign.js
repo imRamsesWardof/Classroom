@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton'
 import { DataGrid } from '@mui/x-data-grid';
-import {Button} from '@mui/material';
+import { Button } from '@mui/material';
 import Select from 'react-select'
 
 
@@ -10,55 +10,58 @@ export default function ListAssign({ userList }) {
   const [rows, setRows] = useState([]);
   const [columns, setColumns] = useState([]);
   const [selectionModel, setSelectionModel] = useState([])
-  const [dataSelect,setDataSelect] = useState([])
-  
+  const [dataSelect, setDataSelect] = useState([])
+
 
   let url = '';
+
   useEffect(() => {
-    
-    fetch('/Student/Get')
+
+    const selectOptions = []
+    fetch('/Class/Get')
       .then((response) => response.json())
       .then((data) => {
-        
+        console.log(data)
+        for (let key in data) {
+          console.log(data[0][key])
+          selectOptions.push({
+            label: data[0][key].name,
+            value: data[0][key].value,
+          })
+        }
+
+       
+        setDataSelect(selectOptions)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    fetch('/Student/Get')
+
+      .then((response) => response.json())
+      .then((data) => {
+
         const columns = [
           { field: 'Name', headerName: 'Nombre' },
           { field: 'Username', headerName: 'Email' },
           { field: 'Date', headerName: 'Fecha' },
         ]
-         const newdata=[]
-       for(let key in data){
-          newdata.push({Id:data[key].Id, Name:data[key].Name,Username:data[key].Username, Date:data[key].Date})
-       }
+        const newdata = []
+        for (let key in data) {
+          newdata.push({ Id: data[key].Id, Name: data[key].Name, Username: data[key].Username, Date: data[key].Date })
+        }
 
-        /*columns.push({
-          field: null,
-          headerName: "Acciones",
-          sortable: false,
-          filterable: false,
-          disableColumnMenu: true,
-          
-          width: 120,
-          renderCell: (params) => {
-            const row = params.row;
-            return (
-              <div>
-
-           <DeleteModal data={row}/>
-           <UserData data ={row}/>
-              </div>
-            );
-          },
-        });*/
 
         setColumns(columns);
         setRows(newdata);
       });
+
   }, [userList]);
 
 
 
   const handleEnviarSeleccionadosClick = () => {
-    fetch( url , {
+    fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -73,14 +76,8 @@ export default function ListAssign({ userList }) {
         console.error(`Error al enviar los datos al servidor: ${error}`);
       });
   }
-   let selectClassUrl =''
-  fetch(selectClassUrl,{method:'post'})
-  .then((response)=>{
-    response.json()
-  })
-  .then((data)=>{
-  setDataSelect(data)
-  })
+
+
 
 
   return (
@@ -89,7 +86,7 @@ export default function ListAssign({ userList }) {
         <Button variant="contained" color="primary" onClick={handleEnviarSeleccionadosClick}>
           Asignar seleccionados
         </Button>
-        <Select options={dataSelect}/>
+        <Select options={dataSelect} />
       </div>
       <DataGrid
         rows={rows}
@@ -102,7 +99,7 @@ export default function ListAssign({ userList }) {
           setSelectionModel(newSelectionModel);
         }}
         selectionModel={selectionModel}
-        
+
       />
     </div>
   );

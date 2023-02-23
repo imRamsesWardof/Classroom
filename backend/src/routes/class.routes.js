@@ -6,8 +6,8 @@ const router = Router();
 router.get('/Get', GetClasses);
 router.get('/Get/:Id', GetClass);
 router.post('/Post', PostClass);
-router.post('/Put/:Id', PutClass);
-router.post('/Delete/:Id', DeleteClass);
+router.put('/Put/:Id', PutClass);
+router.delete('/Delete/:Id', DeleteClass);
 router.post('/Assign/:Id', AssignClass);
 router.get('/Details/:Id', GetDetails)
 
