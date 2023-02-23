@@ -12,10 +12,10 @@ import IconButton from '@mui/material/IconButton'
   const [columns, setColumns] = useState([]);
   const [selectionModel, setSelectionModel] = useState([])
   const [options,setOptions] =useState([])
+  const [serch,setSerch]=useState(false)
   
  const HandleUpdate=()=>{
-  setRows([]);
-  setColumns([]);
+ setSerch(true)
 }
   useEffect(() => {
     let url = '';
@@ -100,7 +100,8 @@ import IconButton from '@mui/material/IconButton'
         setColumns(columns);
         setRows(rows);
       });
-  }, [userList, columns, rows]);
+      
+  }, [userList,serch]);
   
   
   
