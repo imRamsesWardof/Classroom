@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -23,7 +23,7 @@ const style = {
 export default function DeleteModal(props) {
   const [open, setOpen] = React.useState(false);
   const [translated, setTranslated] = React.useState('');
-
+  const navigate = useNavigate();
   const handleOpen = () => {
     setOpen(true)
     switch(props.role){
@@ -42,19 +42,24 @@ export default function DeleteModal(props) {
 
     }
   };
+  console.log(props.role)
   const handleClose = () => setOpen(false);
+ 
   let route = "/" + props.role + "/Delete/" + props.id
   const deleteButton = () => {
+    console.log('here')
     fetch(route, {method: 'DELETE',})
     .then(response => {
       if (!response.ok) {
         alert("Something went wrong")
       }
       else {
+        props.onListUpdate()
         setOpen(false);
       }
     })
     .catch(e => alert("No se eliminó, debido a un error: ", e))
+  
   }
   
   return (
