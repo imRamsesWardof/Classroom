@@ -1,41 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import IconButton from '@mui/material/IconButton'
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import Select from 'react-select'
 
 
 
-export default function ListAssign({ userList }) {
+export default function ListAssign() {
   const [rows, setRows] = useState([]);
   const [columns, setColumns] = useState([]);
   const [selectionModel, setSelectionModel] = useState([])
   const [dataSelect, setDataSelect] = useState([])
+  const [Url,setUrl]=useState([])
+  const selectOptions = []
 
 
-  let url = '';
-
-  useEffect(() => {
-
-    const selectOptions = []
-    fetch('/Class/Get')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        for (let key in data) {
-          console.log(data[0][key])
-          selectOptions.push({
-            label: data[0][key].name,
-            value: data[0][key].value,
-          })
-        }
-
-       
-        setDataSelect(selectOptions)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+  
+   
+    
     fetch('/Student/Get')
 
       .then((response) => response.json())
@@ -55,13 +36,33 @@ export default function ListAssign({ userList }) {
         setColumns(columns);
         setRows(newdata);
       });
+      fetch('/Class/Get')
+  .then((response) => response.json())
+  .then((data) => {
+    
+    const selectOptions = data[0].map((item) => ({
+      label: item.name,
+      value: item.value,
+    }));
+  console.log(selectOptions)
+     
+    setDataSelect(selectOptions)
+  })
+  .catch((error) => {
+    console.error(error)
+  })
 
-  }, [userList]);
 
+  
 
+const setIdClass=(event)=>{
+  console.log(event.value)
+ let  newUrl='/Class/Assign/'+event.value
+  setUrl(newUrl)
+}
 
   const handleEnviarSeleccionadosClick = () => {
-    fetch(url, {
+    fetch(Url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -70,15 +71,14 @@ export default function ListAssign({ userList }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(`Respuesta del servidor: ${data}`);
+        console.log(data);
       })
       .catch((error) => {
         console.error(`Error al enviar los datos al servidor: ${error}`);
       });
   }
-
-
-
+  
+  
 
   return (
     <div style={{ height: 400, width: '100%' }}>
@@ -86,7 +86,7 @@ export default function ListAssign({ userList }) {
         <Button variant="contained" color="primary" onClick={handleEnviarSeleccionadosClick}>
           Asignar seleccionados
         </Button>
-        <Select options={dataSelect} />
+        <Select onChange={setIdClass} options={dataSelect} />
       </div>
       <DataGrid
         rows={rows}
