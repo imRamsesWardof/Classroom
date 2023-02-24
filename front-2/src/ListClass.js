@@ -22,26 +22,23 @@ import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
     let url = '';
     let main_route = '/Admin/'
     let role = 'Classes'
-
     const columns = [
-      
       { field:"Name" , headerName: "Nombre", },
-      
     ];
-
-
     fetch('/Class/Get')
       .then((response) => response.json())
       .then((data) => {
        console.log(data)
       const rows=[];
-      for(let key in data){
        
-
-          rows.push ({key:data[0][key].value, Name:data[0][key].name })
-        
-
-      }
+    fetch('/Class/Get')
+    .then((response) => response.json())
+    .then((data) => {
+      
+      const row = data[0].map((item) => ({
+        Name: item.name,
+        key: item.value,
+      }));
      
         columns.push({
           field: null,
@@ -73,7 +70,7 @@ import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
           },
         });
 
-        
+
         setColumns(columns);
         setRows(rows);
       });
@@ -81,12 +78,6 @@ import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
   }, []);
   
   
-  
- /* const { data } = useDemoData({
-    dataSet: 'Commodity',
-    rowLength: 10,
-    maxColumns: 6,
-  });*/
  
 
   return (
