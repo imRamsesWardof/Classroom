@@ -73,19 +73,12 @@ import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
           },
         });
 
-        /*
-        fetch(urlClases,{method:'GET'})
-        .then((response)=> response.json())
-        .then((data)=>{
-          setOptions(data)
-        })*/
-           
-
+        
         setColumns(columns);
         setRows(rows);
       });
       
-  }, [serch]);
+  }, []);
   
   
   

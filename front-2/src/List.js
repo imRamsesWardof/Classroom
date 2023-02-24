@@ -54,6 +54,7 @@ import IconButton from '@mui/material/IconButton'
        console.log(data)
       const rows=[];
       for(let key in data){
+        
         if(data[key].IsActive.data[0]===1){
 
           rows.push ({key:data[key].Id, Name:data[key].Name, Username:data[key].Username})
@@ -70,7 +71,6 @@ import IconButton from '@mui/material/IconButton'
           width: 120,
           renderCell: (params) => {
             const row = params.row;
-            console.log(row)
          
             return (
               <div display='flex'>

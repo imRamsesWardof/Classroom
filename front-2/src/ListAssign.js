@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import Select from 'react-select'
+import AssignConfirm from './AssignConfirm'
 
 
 
@@ -11,6 +12,9 @@ export default function ListAssign() {
   const [selectionModel, setSelectionModel] = useState([])
   const [dataSelect, setDataSelect] = useState([])
   const [Url,setUrl]=useState([])
+  const [clase,setClase]=useState('')
+  const [classname,setClassName]=useState('')
+
 
 
   
@@ -63,7 +67,9 @@ export default function ListAssign() {
 const setIdClass=(event)=>{
   console.log(event.value)
  let  newUrl='/Class/Assign/'+event.value
+  setClassName(event.value)
   setUrl(newUrl)
+  setClase(event.label)
 }
 
   const handleEnviarSeleccionadosClick = () => {
@@ -88,9 +94,9 @@ const setIdClass=(event)=>{
   return (
     <div style={{ height: 400, width: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-        <Button variant="contained" color="primary" onClick={handleEnviarSeleccionadosClick}>
-          Asignar seleccionados
-        </Button>
+        <AssignConfirm variant="contained" color="primary" idclase={classname} elementos={selectionModel.length } clase={clase} ConfirmAssign={handleEnviarSeleccionadosClick}/>
+          
+        
         <Select onChange={setIdClass} options={dataSelect} />
       </div>
       <DataGrid
