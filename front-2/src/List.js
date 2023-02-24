@@ -54,7 +54,7 @@ import IconButton from '@mui/material/IconButton'
        console.log(data)
       const rows=[];
       for(let key in data){
-        
+
         if(data[key].IsActive.data[0]===1){
 
           rows.push ({key:data[key].Id, Name:data[key].Name, Username:data[key].Username})
@@ -73,17 +73,20 @@ import IconButton from '@mui/material/IconButton'
             const row = params.row;
          
             return (
-              <div display='flex'>
-           <DeleteModal id={row.key} role={roleDelete} name={row.Name} onListUpdate={HandleUpdate}  /> 
+              <div display='flex '
+              justify-content= 'space-between'> 
+            <div display='block'>
+            </div>
            <IconButton component={Link} 
            to={ main_route+role+'/Edit/'+row.key
-            } 
+          } 
             state= {{
-                username:row.Username,
-                name:row.Name,
-                password:''
-                
-                }} ><EDIT/></IconButton>
+              username:row.Username,
+              name:row.Name,
+              password:''
+              
+            }} ><EDIT/></IconButton>
+            <DeleteModal  id={row.key} role={roleDelete} name={row.Name} onListUpdate={HandleUpdate}  /> 
               </div>
             );
           },

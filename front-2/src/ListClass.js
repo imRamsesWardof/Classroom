@@ -25,17 +25,13 @@ import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
     const columns = [
       { field:"Name" , headerName: "Nombre", },
     ];
-    fetch('/Class/Get')
-      .then((response) => response.json())
-      .then((data) => {
-       console.log(data)
-      const rows=[];
+    
        
     fetch('/Class/Get')
     .then((response) => response.json())
     .then((data) => {
       
-      const row = data[0].map((item) => ({
+      const rows = data[0].map((item) => ({
         Name: item.name,
         key: item.value,
       }));
@@ -52,10 +48,11 @@ import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
             console.log(row)
          
             return (
-              <div display='flex'> 
+              <div display='flex ' flex-wrap='nowrap'
+              justify-content= 'space-between'> 
               <IconButton component={Link} 
                to={ main_route+role+'/Details/'+row.key} 
-             ><EDIT/></IconButton>
+             ><AssignmentReturnedIcon/></IconButton>
            <IconButton component={Link} 
            to={ main_route+role+'/Edit/'+row.key
             } 
@@ -75,7 +72,7 @@ import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
         setRows(rows);
       });
       
-  }, []);
+  }, [userList]);
   
   
  
@@ -97,4 +94,4 @@ import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
       />
     </div>
   );
-}
+      }

@@ -20,6 +20,7 @@ const style = {
 };
 
 
+
 export default function DeleteModal(props) {
   const [open, setOpen] = React.useState(false);
   const [translated, setTranslated] = React.useState('');
@@ -53,7 +54,7 @@ export default function DeleteModal(props) {
   
   return (
     <div>
-      <IconButton onClick={handleOpen} color="primary">Asignar </IconButton>
+      <IconButton onClick={handleOpen} color="primary" >Asignar </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
