@@ -32,11 +32,11 @@ function AddClass(props){
   if (props.action === 'Put') {
     accion = "Actualizar "
   }
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [teacherid, setTeacherId] = useState("")
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+  const [title, setTitle] = useState(data ? data.Title : '')
+  const [description, setDescription] = useState(data ? data.Description : '')
+  const [teacherid, setTeacherId] = useState(data ? data.TeacherId : '')
+  const [startDate, setStartDate] = useState(data ? data.StartDate : new Date())
+  const [endDate, setEndDate] = useState(data ? data.EndDate : new Date())
   const [disabled, setDisabled] = useState(true)
   const [errorDate, setErrorDate] = useState('')
   
@@ -119,10 +119,11 @@ function AddClass(props){
             id="outlined-required"
             label="Título"
             onChange={e=>setTitle(e.target.value)}
+            defaultValue={title}
             />
           </Grid>
           <Grid item xs={12}>
-            <SelectTeacher fullWidth onChange={(data) => setTeacherId(data)} teacherId={data ? data.TeacherId : ''}/>
+            <SelectTeacher fullWidth onChange={(data) => setTeacherId(data)} teacherId={teacherid}/>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -133,7 +134,7 @@ function AddClass(props){
             label="Descripción"
             multiline
             maxRows={4}
-            defaultValue={data ? data.Description : ""}
+            defaultValue={description}
             onChange={e=>setDescription(e.target.value)}
             />
           </Grid><Grid item xs={6}>
