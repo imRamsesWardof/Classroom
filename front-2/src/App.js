@@ -14,8 +14,6 @@ import MenuAdminTeacher from './MenuAdminTeacher';
 import MenuAdminStudent from './MenuAdminStudent';
 import MenuAdminClass from './MenuAdminClass'
 import ListDetails from './ListDetails';
-
-
 import ListAssign from './ListAssign';
 class App extends React.Component{
     render(){
@@ -47,7 +45,7 @@ class App extends React.Component{
             <Route index element={<MenuAdminClass role="Classes"/>}></Route>
             <Route path='Add' element={<AddClass action="Post"/>}></Route>
             <Route path='Edit/:id' element={<AddClass action="Put"/>}></Route>
-            <Route path='Assign/' element={<ListAssign />}></Route>
+            <Route path='Assign/' element={<ListAssign  />}></Route>
             <Route path='Details/:id' element={<ListDetails />}></Route>
           </Route>
           <Route path="Teachers" element={<AppAdmin actualCrud="Teacher"/>}>

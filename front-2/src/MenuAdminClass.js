@@ -11,7 +11,9 @@ export default function MenuAdminClass(props) {
       state={{name: "dfghdf",
               username: "fdghdf@sdfasd",
               password: "asdf"}} >Editar</Button>
+
      */
+     console.log('ejec')
   return (<div>
     <Button component={Link} to={main_route + role + "/Add"}>Añadir</Button>
     <Button component={Link} to={main_route + role + "/Assign"}>Asignar Clases</Button>

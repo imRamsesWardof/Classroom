@@ -1,16 +1,10 @@
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useState, useEffect } from 'react';
-import DeleteModal from './DeleteModal'
-import { Link } from 'react-router-dom';
-import EDIT from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton'
-import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
+
 import { useParams } from 'react-router-dom';
-import { CardContent, CardHeader } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 
- export default function ListDetails(props) {
+ export default function ListDetails() {
 
   const [rows, setRows] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -19,12 +13,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
   const [serch,setSerch]=useState(false)
   let id = useParams().id
   console.log(id)
-  let route
-  const navigate = useNavigate();
-  const location = useLocation()
-  console.log(location)
-  const data = location.state 
- 
   const HandleUpdate=()=>{
  setSerch(true)
 }
@@ -56,7 +44,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
         setRows(rows);
       });
       
-  }, [serch]);
+  }, []);
   
   
   
