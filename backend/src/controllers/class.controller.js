@@ -113,12 +113,13 @@ export const DeleteClass = async (req, res) => {
 export const AssignClass = async (req, res) => {
   try {
     const values = req.body;  // It supposed to be an array of StudentsID
-    console.log(values)
-    console.log(req.params.Id)
+    console.log('ARRAY DE ID',req.body);
+    /* console.log(values)
+    console.log(req.params.Id) */
     for (const element of values) {
       const Id = uuidv4();
-      console.log(Id)
-      console.log(element)
+      /* console.log(Id)
+      console.log(element) */
       const [result] = await pool.query("CALL AssignClass(?, ?, ?)", [
         Id,
         element,
