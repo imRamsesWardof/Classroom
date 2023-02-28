@@ -20,6 +20,7 @@ const style = {
 };
 
 
+
 export default function DeleteModal(props) {
   const [open, setOpen] = React.useState(false);
   const [translated, setTranslated] = React.useState('');
@@ -43,28 +44,17 @@ export default function DeleteModal(props) {
     }
   };
   console.log(props.role)
+  
   const handleClose = () => setOpen(false);
  
-  let route = "/" + props.role + "/Delete/" + props.id
   const deleteButton = () => {
-    console.log('here')
-    fetch(route, {method: 'DELETE',})
-    .then(response => {
-      if (!response.ok) {
-        alert("Something went wrong")
-      }
-      else {
-        props.onListUpdate()
-        setOpen(false);
-      }
-    })
-    .catch(e => alert("No se eliminó, debido a un error: ", e))
-  
+    props.ConfirmAssign()
+    navigate('/Admin/Classes/Details/'+props.idclase);
   }
   
   return (
     <div>
-      <IconButton onClick={handleOpen} color="error"><DeleteOutlineIcon/></IconButton>
+      <IconButton onClick={handleOpen} color="primary" >Asignar </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -73,14 +63,14 @@ export default function DeleteModal(props) {
       >
         <Box sx={style}>
           <Typography id="modal-title" variant="h6" component="h2">
-            Confirmación de eliminación de datos
+            Confirmación de asignacion de alumnos
           </Typography>
           <Typography id="modal-description" sx={{ mt: 2 }}>
-            ¿Está seguro de eliminar "{props.name}"<br/>
-            Tipo : {translated}
+            Se agregaran "{props.elementos}" elementos<br/>
+            clase : {props.clase}
           </Typography>
           <Button onClick={handleClose} variant="contained" sx={{ m: 2 }}> Cancelar</Button>
-          <Button onClick={deleteButton} color="error" variant="contained" sx={{ m: 2 }}> Eliminar</Button>
+          <Button onClick={deleteButton} color="success" variant="contained" sx={{ m: 2 }}> Asignar</Button>
         </Box>
       </Modal>
     </div>

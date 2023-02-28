@@ -10,7 +10,9 @@ import { CardContent, CardHeader } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function UserData(props) {
+  
   let id = useParams().id
+  console.log(id)
   let route
   const navigate = useNavigate();
   const location = useLocation()

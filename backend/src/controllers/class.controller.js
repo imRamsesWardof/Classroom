@@ -112,22 +112,29 @@ export const DeleteClass = async (req, res) => {
 
 export const AssignClass = async (req, res) => {
   try {
-    var values = req.body;  // It supposed to be an array of StudentsID
-
-    await values.forEach(element => {
-      let Id = uuidv4();
-      const [result] = pool.query("CALL AssignClass(?, ?, ?)", [
+    const values = req.body;  // It supposed to be an array of StudentsID
+    console.log('ARRAY DE ID',req.body);
+    /* console.log(values)
+    console.log(req.params.Id) */
+    for (const element of values) {
+      const Id = uuidv4();
+      /* console.log(Id)
+      console.log(element) */
+      const [result] = await pool.query("CALL AssignClass(?, ?, ?)", [
         Id,
         element,
         req.params.Id
       ]);
-      if (result.affectedRows <= 0)
+      if (result.affectedRows <= 0) {
         return res.status(404).json({
           message: "Clase no encontrada",
         });
-    });
-    res.sendStatus(204);
+      }
+    }
+    return res.status(500).json({
+      message: "yai",})
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       message: "Something goes wrong",
     });
