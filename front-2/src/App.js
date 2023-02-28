@@ -54,7 +54,7 @@ class App extends React.Component{
             <Route index element={<MenuAdminStudent role="Students"/>}></Route>
             <Route path='Add' element={<UserData role="Student" action="Post"/>}></Route>
             <Route path='Edit/:id' element={<UserData role="Student" action="Put"/>}></Route>
-            <Route path='Delete/:id' element={<DeleteModal role="Student"/>}></Route>
+            <Route path='Delete/:id' element={<DeleteModal role="Student" id='21965c0a-56e9-4425-a1c4-78649c996d71'/>}></Route>
           </Route>
         </Route>
       </Routes>
