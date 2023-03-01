@@ -154,7 +154,7 @@ function AddClass(props){
                     required
                     name="StartDate"  
                     label="Inicia" 
-                    inputFormat="DD/MM/YYYY"
+                    inputFormat="MM/DD/YYYY"
                     value={startDate}
                     onChange={date => {setStartDate(date)}
                     }
