@@ -1,23 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { AppRegistry } from 'react-native';
-import { StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Provider as PaperProvider, Button, TextInput, Card, LeftContent } from 'react-native-paper';
 import { createContext, useState } from 'react';
 import MobileRoutes from './Routes/MobileRoutes'
 
-
-
+export const AuthContext = createContext(null);
 
 export default function App() {
-  const [jwt, setJwt] = useContext()
-  const [role, setRole] = useContext()
-  const AuthContext = createContext(jwt, setJwt, role, setRole)
+  const [auth, setAuth] = useState({})
   return (
     <PaperProvider>
-      <MobileRoutes />
+      <AuthContext.Provider value={{ auth, setAuth }}>
+        <MobileRoutes />
+      </AuthContext.Provider>
     </PaperProvider>
   );
 }
 
 
-AppRegistry.registerComponent(App, () => Main);
+AppRegistry.registerComponent('Main', () => App);

@@ -1,15 +1,53 @@
 import { StatusBar } from 'expo-status-bar';
 import { AppRegistry } from 'react-native';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Button, TextInput, Card } from 'react-native-paper';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigate } from "react-router-native";
+import { AuthContext } from '../App'
 
 
 export default function Login() {
+    const { setAuth } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(true)
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [disableLogin, setDisableLogin] = useState(true)
     const Navigate = useNavigate()
+    const loginAPI = () => {
+        const payload = {
+            Username: username,
+            Password: password
+        };
+        fetch('http://localhost:4000/LoginMobile', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    alert(response.error)
+                }
+                setAuth({
+                    jwt: response.Jwt,
+                    role: response.Role
+                })
+                Navigate('/Estadisticas')
+            }
+
+            )
+    }
+    useEffect(() => {
+        if (username.trim() !== '' && password.trim() !== '') {
+            setDisableLogin(false)
+        }
+        else {
+            setDisableLogin(true)
+        }
+    }, [username, password])
     return (
         <SafeAreaView>
             <View style={styles.container}>
@@ -17,12 +55,17 @@ export default function Login() {
                     <Card.Title title="Login" subtitle="Ingresa los Datos" />
                     <Card.Content style={styles.card}>
                         <TextInput
-                            label="Email" style={styles.text}>
+                            label="Email" 
+                            style={styles.textinput}
+                            value={username}
+                            onChangeText={email => { setUsername(email) }}>
                         </TextInput>
                         <TextInput
                             styles={styles.textinput}
+                            value={password}
                             secureTextEntry={showPassword}
                             label="Contraseña"
+                            onChangeText={password => { setPassword(password) }}
                             right={<TextInput.Icon icon="eye" onPress={e => setShowPassword(!showPassword)} />}
                         >
                         </TextInput>
@@ -31,12 +74,12 @@ export default function Login() {
 
                     <StatusBar style="auto" />
                     <Card.Actions>
-                        <Button onPress={()=>Navigate('/Estadisticas')}>Login</Button>
+                        <Button disabled={disableLogin} onPress={() => loginAPI()}>Login</Button>
                     </Card.Actions>
                 </Card>
             </View>
-            </SafeAreaView>
-        
+        </SafeAreaView>
+
     );
 }
 
@@ -56,16 +99,17 @@ const styles = StyleSheet.create({
         minWidth: '80%'
     },
     cardBody: {
-        
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         minWidth: '100%',
         minHeight: '100%',
         backgroundColor: '#000',
-        margin: 'auto'
+        margin: 'auto',
+        padding: 5
     },
     textinput: {
-        flex: 1
+        marginTop: 10,
+        marginBottom: 20 
     },
 });
 
