@@ -1,5 +1,6 @@
 import {pool} from "../classroom.db.js"
 import { v4 as uuidv4 } from 'uuid';
+import { encrypt, compare } from "../helper/handleBcrypt.js";
 
 export const GetStudent = async (req, res) => {
 
@@ -22,6 +23,7 @@ export const PostStudent = async (req, res) => {
     var date = new Date();
     date.toString();
     let Id = uuidv4();
+    const passwordHash = await encrypt(Password);
 
     const [result] = await pool.query("SELECT Id FROM role WHERE Type = 'Student'");
     console.log(result);
@@ -32,7 +34,7 @@ export const PostStudent = async (req, res) => {
       Id,
       Name,
       Username,
-      Password,
+      passwordHash,
       Rol_Id,
       IsActive,
       date

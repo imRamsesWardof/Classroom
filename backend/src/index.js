@@ -5,6 +5,7 @@ import studentRoutes from "./routes/student.routes.js";
 import teacherRoutes from "./routes/teacher.routes.js";
 import roleRoutes from "./routes/role.routes.js";
 import classRoutes from "./routes/class.routes.js";
+import loginRoutes from "./routes/autho.routes.js";
 import cors from "cors";
 
 const app = express();
@@ -15,6 +16,7 @@ app.listen(4000);
 app.use(cors());
 app.use(morgan("dev"));
 app.use(indexRoutes);
+app.use(loginRoutes);
 app.use('/Student',studentRoutes);
 app.use('/Teacher',teacherRoutes);
 app.use('/Role',roleRoutes);
