@@ -45,10 +45,15 @@ CREATE TABLE IF NOT EXISTS `Classroom`.`Class` (
   `Description` TEXT NULL,
   `StartDate` DATETIME NULL,
   `EndDate` DATETIME NULL,
+  `Teacher_Id` VARCHAR(36) NOT NULL,
   `IsActive` BIT NULL,
   `Date` DATETIME NULL,
-  PRIMARY KEY (`Id`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`Id`),
+  CONSTRAINT `fk_User_tacher`
+    FOREIGN KEY (`Teacher_Id`)
+    REFERENCES `Classroom`.`user` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------

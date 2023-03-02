@@ -1,14 +1,15 @@
 import React from 'react';
-import { Outlet, Link, Routes, Route} from "react-router-dom";
+import { Outlet, Link} from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
-import AppAdmin from './AppAdmin';
+import '../src/styles/Layout.css'
 
 class AdminLayout extends React.Component{
     render(){
-        return(<>
+        return(
+        <div className="Ram">
             <AppBar position="static">
             <Toolbar>
             <MenuItem component={Link} to="/Admin/Classes" key="Classes" href="/Classes">
@@ -19,11 +20,11 @@ class AdminLayout extends React.Component{
             </MenuItem>
             <MenuItem component={Link} to="/Admin/Students" key="Students" href="/Students">
                 <Typography textAlign="center">Estudiantes</Typography>
-            </MenuItem>
-        </Toolbar>
-        </AppBar>
+            </MenuItem>  
+            </Toolbar>
+            </AppBar>
         <Outlet />
-        </>)
+        </div>)
     }
 }
 
