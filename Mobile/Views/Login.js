@@ -24,7 +24,8 @@ export default function Login() {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'mode': 'CORS'
             }
         })
             .then(response => {
