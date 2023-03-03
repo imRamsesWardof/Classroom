@@ -9,6 +9,6 @@ router.post('/Post', PostClass);
 router.put('/Put/:Id', PutClass);
 router.delete('/Delete/:Id', DeleteClass);
 router.post('/Assign/:Id', AssignClass);
-router.get('/Details/:Id', GetDetails)
+router.get('/Details/:Id', GetDetails);
 
 export default router
