@@ -35,13 +35,12 @@ export default function LogIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        var accessData = {
-            email: data.get('email'),
-            password: data.get('password'),
-        };
+        let accessData = JSON.stringify({
+            "Username": data.get('Username'),
+            "Password": data.get('Password'),
+        })
 
-        //! Configurar el envio de las credenciales con fetch.
-        fetch('/LoginWeb', { 
+        fetch('/LoginWeb', {
             method: 'POST',
             body: accessData,
             headers: { 'Content-Type': 'application/json' }
@@ -52,8 +51,13 @@ export default function LogIn() {
                 }
                 else {
                     console.log(response);
-                    navigate('/Login');
+                    console.log("OK");
+                    return response.json();
                 }
+            })
+            .then(data => {
+                console.log(data);
+                navigate('/Login');
             })
             .catch(error => {
                 alert(error)
@@ -74,9 +78,9 @@ export default function LogIn() {
 
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, justify: 'center' }}>
                         <TextField margin="normal" required fullWidth id="email" label="Email"
-                            name="email" autoComplete="email" autoFocus />
-                        <TextField margin="normal" required fullWidth name="password" label="Password"
-                            type="password" id="password" autoComplete="current-password" />
+                            name="Username" autoComplete="email" autoFocus />
+                        <TextField margin="normal" required fullWidth name="Password" label="Password"
+                            type="Password" id="password" autoComplete="current-password" />
                         {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"

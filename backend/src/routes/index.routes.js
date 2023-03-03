@@ -4,6 +4,7 @@ import classRoutes from "./class.routes.js";
 import studentRoutes from "./student.routes.js";
 import teacherRoutes from "./teacher.routes.js";
 import roleRoutes from "./role.routes.js";
+import authRoutes from "./autho.routes.js";
 
 const router = Router();
 
@@ -12,5 +13,7 @@ router.use('/Student',studentRoutes);
 router.use('/Teacher',teacherRoutes);
 router.use('/Role',roleRoutes);
 router.use('/Class', classRoutes);
+router.use(authRoutes);
+
 
 export default router

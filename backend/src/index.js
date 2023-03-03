@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.listen(4000);
-app.use(cors());
+app.use(cors({'origin': '*'}));
 app.use(morgan("dev"));
 
 // Router
