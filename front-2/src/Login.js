@@ -28,36 +28,6 @@ function Copyright(props) {
     );
 }
 
-function PositionedSnackbar() {
-    const [open, setOpen] = React.useState(true);
-
-    const handleClick = (newState) => {
-        setState({
-            open: true,
-            ...newState
-        });
-    };
-
-
-    const handleClose = (newState) => {
-        setState({ ...newState, open: false });
-    };
-
-    return (
-        <React.Fragment>
-            <Snackbar
-                open={open}
-                onClose={(event, reason) => {
-                    // `reason === 'escapeKeyDown'` if `Escape` was pressed
-                    setOpen(false);
-                    // call `event.preventDefault` to only close one Snackbar at a time.
-                }}
-            />
-            <Snackbar open={open} onClose={() => setOpen(false)} />
-        </React.Fragment>
-    );
-}
-
 export default function LogIn() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -71,7 +41,7 @@ export default function LogIn() {
         };
 
         //! Configurar el envio de las credenciales con fetch.
-        fetch('login/auth', {   // Cambiar a la ruta que haga el match de contraseñas y otorgue el jwt.
+        fetch('/LoginWeb', { 
             method: 'POST',
             body: accessData,
             headers: { 'Content-Type': 'application/json' }
@@ -94,9 +64,6 @@ export default function LogIn() {
         <Grid container component="main" sx={{ height: '100vh' }}>
             <CssBaseline />
             <Grid item md={12} sx={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
-                <PositionedSnackbar />
-
                 <Paper sx={{ p: 8, margin: 30, maxWidth: 500, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                         <HistoryEduIcon />
