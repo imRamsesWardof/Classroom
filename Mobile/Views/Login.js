@@ -9,18 +9,21 @@ import { AuthContext } from '../App'
 
 
 export default function Login() {
-    const { setAuth } = useContext(AuthContext)
+    const { auth, setAuth } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(true)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [disableLogin, setDisableLogin] = useState(true)
     const Navigate = useNavigate()
+    useEffect(() => {
+        console.log(auth)
+    }, [auth])
     const loginAPI = () => {
         const payload = {
             Username: username,
             Password: password
         };
-        fetch('http://localhost:4000/LoginMobile', {
+        fetch('http://192.168.86.21:4000/LoginMobile', {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
@@ -35,12 +38,14 @@ export default function Login() {
                 return response.json()
             })
             .then((data) => {
-                console.log(response)
-                setAuth({
-                    jwt: data.Jwt,
-                    role: data.Role
-                })
-                Navigate('/Estadisticas')
+                console.log(data)
+                setAuth({role: data.role, token: data.token})
+                Navigate('/Admin/Estadisticas')
+            })
+            .catch((error) => {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+                console.log(error)
+                throw error;
             })
     }
 
