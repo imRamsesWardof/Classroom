@@ -12,10 +12,10 @@ export default function NoAuthorized() {
         <SafeAreaView>
             <View style={styles.container}>
                 <Card style={styles.card}>
-                    <Card.Title title="No autorizado" />
+                    <Card.Title title="Bienvenido"  subtitle="Classroom"/>
                     <Card.Content style={styles.card}>
                         <Text variant="bodyMedium">
-                            Este contenido es sólo para administradores.
+                            Classroom es una aplicación para cursos, generados por Eje4
                         </Text>
                     </Card.Content>
 

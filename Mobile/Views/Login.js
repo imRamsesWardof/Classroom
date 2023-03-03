@@ -32,15 +32,18 @@ export default function Login() {
                 if (!response.ok) {
                     alert(response.error)
                 }
+                return response.json()
+            })
+            .then((data) => {
+                console.log(response)
                 setAuth({
-                    jwt: response.Jwt,
-                    role: response.Role
+                    jwt: data.Jwt,
+                    role: data.Role
                 })
                 Navigate('/Estadisticas')
-            }
-
-            )
+            })
     }
+
     useEffect(() => {
         if (username.trim() !== '' && password.trim() !== '') {
             setDisableLogin(false)
@@ -56,7 +59,7 @@ export default function Login() {
                     <Card.Title title="Login" subtitle="Ingresa los Datos" />
                     <Card.Content style={styles.card}>
                         <TextInput
-                            label="Email" 
+                            label="Email"
                             style={styles.textinput}
                             value={username}
                             onChangeText={email => { setUsername(email) }}>
@@ -76,6 +79,7 @@ export default function Login() {
                     <StatusBar style="auto" />
                     <Card.Actions>
                         <Button disabled={disableLogin} onPress={() => loginAPI()}>Login</Button>
+                        <Button onPress={() => Navigate('/NoAuthorizado')}>No Autorizado</Button>
                     </Card.Actions>
                 </Card>
             </View>
@@ -110,7 +114,7 @@ const styles = StyleSheet.create({
     },
     textinput: {
         marginTop: 10,
-        marginBottom: 20 
+        marginBottom: 20
     },
 });
 
