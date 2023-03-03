@@ -42,14 +42,6 @@ function AddClass(props){
   const [errorDate, setErrorDate] = useState('')
 
   useEffect(() => {
-    console.log("Inicio")
-    console.log(title)
-    console.log(description)
-    console.log(teacherid)
-    console.log(startDate)
-    console.log(endDate)
-    console.log(disabled)
-    console.log(errorDate)
     if (dayjs(startDate).toDate().getTime() > dayjs(endDate).toDate().getTime()){
       setErrorDate("La fecha de finalización se muestra que es antes de la de inicio, favor de verificar")
     }
@@ -154,7 +146,7 @@ function AddClass(props){
                     required
                     name="StartDate"  
                     label="Inicia" 
-                    inputFormat="MM/DD/YYYY"
+                    inputFormat="DD/MM/YYYY"
                     value={startDate}
                     onChange={date => {setStartDate(date)}
                     }
