@@ -22,10 +22,12 @@ CREATE PROCEDURE PostClass(
         IN Description TEXT,
         IN User_Id VARCHAR(36),
         IN StartDate DATETIME,
-        IN EndDate DATE)
+        IN EndDate DATETIME,
+        IN IsActive_ BIT,
+        IN Date_ DATETIME)
 BEGIN
 	INSERT INTO `class` (`Id`, `Title`, `Description`, `Teacher_Id`, `StartDate`, `EndDate`) VALUES 
-    (Id, Title, Description, User_Id, StartDate, EndDate);
+    (Id, Title, Description, User_Id, StartDate, EndDate, IsActive_, Date_);
 END //
 DELIMITER ;
 

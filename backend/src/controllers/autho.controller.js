@@ -1,5 +1,4 @@
 import { pool } from "../classroom.db.js";
-import { v4 as uuidv4 } from "uuid";
 import { compare } from "../helper/handleBcrypt.js";
 import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv' 
@@ -19,7 +18,7 @@ export const LoginWeb = async (req, res) => {
         const { Id, Name, Role } = rows[0][0];
         const newToken = jwt.sign({ id: Id, name: Name }, process.env.TOKEN_KEY , { expiresIn: "10m" });
         return res.status(200).json({
-          message: "!Login exitoso, Inicia sesión!",
+          message: "¡Login exitoso!",
           role: Role,
           token: newToken,
         });
@@ -55,7 +54,7 @@ export const LoginMobile = async (req, res) => {
           const tokenKey = process.env.TOKEN_KEY
           const newToken = jwt.sign({ id: Id, name: Name }, process.env.TOKEN_KEY, { expiresIn: "10m" });
           return res.status(200).json({
-            message: "!Login exitoso, Inicia sesión!",
+            message: "¡Login exitoso!",
             role: Role,
             token: newToken,
           });

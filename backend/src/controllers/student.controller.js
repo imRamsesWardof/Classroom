@@ -1,17 +1,15 @@
 import {pool} from "../classroom.db.js"
 import { v4 as uuidv4 } from 'uuid';
-import { encrypt, compare } from "../helper/handleBcrypt.js";
+import { encrypt } from "../helper/handleBcrypt.js";
 
 export const GetStudent = async (req, res) => {
 
   try {
     const [rows] = await pool.query("CALL GetUser('Student')");
-    console.log(rows);
     res.send(rows[0]);
   } catch (error) {
-    console.log(error)
     return res.status(500).json({
-      message: "Something goes wrong trying to GET-USER-STUDENT",
+      message: "Something goes wrong trying to GetStudent",
     });
   }
 }
@@ -26,9 +24,7 @@ export const PostStudent = async (req, res) => {
     const passwordHash = await encrypt(Password);
 
     const [result] = await pool.query("SELECT Id FROM role WHERE Type = 'Student'");
-    console.log(result);
     const Rol_Id = result[0].Id.toString();
-    console.log(Rol_Id);
 
     const [rows] = await pool.query("CALL PostUser(?, ?, ?, ?, ?, ?, ?)", [
       Id,
@@ -40,7 +36,6 @@ export const PostStudent = async (req, res) => {
       date
     ]);
     res.send({
-      "data" : rows,
       Id,
       Name,
       Username,
@@ -52,7 +47,7 @@ export const PostStudent = async (req, res) => {
   } catch (error) {
     console.log(error)
     return res.status(500).json({
-      message: "Something goes wrong trying to POSTUSER",
+      message: "Something goes wrong trying to PostUser",
     });
   }
 };
@@ -74,10 +69,6 @@ export const PutStudent = async (req, res) => {
       date,
     ]);
     
-   /*  res.status(200).json({
-      message: "Usuario actualizado",
-    }); */
-
     if (result.affectedRows === 0)
       return res.status(404).json({
         message: "Usuario no encontrado",
@@ -87,7 +78,7 @@ export const PutStudent = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Something goes wrong trying to PUT-USER-STUDENT ",
+      message: "Something goes wrong trying to PostStudent",
     });
   }
 };
@@ -113,7 +104,7 @@ export const DeleteStudent = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Something goes wrong trying to DELETE",
+      message: "Something goes wrong trying to DeleteStudent",
     });
   }
 };

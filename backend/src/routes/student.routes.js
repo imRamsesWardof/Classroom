@@ -3,7 +3,7 @@ import {GetStudent, PostStudent, PutStudent, DeleteStudent} from "../controllers
 import { validateToken } from "../middlewares/verifytoken.middleware.js"
 const router = Router();
 
-router.get('/Get', validateToken , GetStudent)
+router.get('/Get', GetStudent)
 router.post('/Post', PostStudent)
 router.put('/Put/:Id', PutStudent)
 router.delete('/Delete/:Id', DeleteStudent)
