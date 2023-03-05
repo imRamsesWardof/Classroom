@@ -2,8 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, TextInput, Card } from 'react-native-paper';
 import { useState, useContext, useEffect } from 'react';
-import { AuthContext } from '../App'
-
+import { AuthContext } from '../routes/MobileRoutes'
 
 export default function Login( {navigation} ) {
     const { auth, setAuth } = useContext(AuthContext)
@@ -53,7 +52,7 @@ export default function Login( {navigation} ) {
         }
     }, [username, password])
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
 
@@ -79,7 +78,6 @@ export default function Login( {navigation} ) {
                     <StatusBar style="auto" />
                     <Card.Actions>
                         <Button disabled={disableLogin} onPress={() => loginAPI()}>Login</Button>
-                        <Button onPress={() => navigation.navigate('NoAutorizado')}>No Autorizado</Button>
                     </Card.Actions>
                 </Card>
             </KeyboardAvoidingView>

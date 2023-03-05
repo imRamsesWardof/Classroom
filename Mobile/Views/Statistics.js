@@ -1,8 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { Card, Text } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import LogOut from '../components/LogOut'
-
+  
 export default function Statistics() {
     return (
             <View style={styles.container}>
@@ -14,7 +12,6 @@ export default function Statistics() {
                         </Text>
                     </Card.Content>
                     <Card.Actions>
-                        <LogOut/>
                     </Card.Actions>
                 </Card>
             </View>

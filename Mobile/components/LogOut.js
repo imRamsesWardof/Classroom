@@ -1,14 +1,14 @@
 import { Button } from 'react-native-paper';
-import { AuthContext } from '../App'
+import { AuthContext } from '../routes/MobileRoutes'
 
 import { useContext, useEffect } from 'react';
 
-export default function LogOut( {navigation} ) {
+export default function LogOut( ) {
     const { auth, setAuth } = useContext(AuthContext)
     const logOut = ()=>{
         setAuth({})
     }
     return (
-        <Button onPress={logOut}>Log Out</Button>
+        <Button onPress={logOut} buttonText='red' style={{width: '50%'}} compact={true}>Log Out</Button>
     );
 }

@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput, Card, Text } from 'react-native-paper';
-import { AuthContext } from '../App'
-
+import { AuthContext } from '../routes/MobileRoutes'
 import { useContext } from 'react';
 
 export default function Home({ navigation }) {

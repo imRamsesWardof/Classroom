@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput, Card, Text } from 'react-native-paper';
 
-
 export default function NoAuthorized( {navigation} ) {
     return (
             <View style={styles.container}>
