@@ -1,33 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput, Card, Text } from 'react-native-paper';
-import { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigate } from "react-router-native";
+import { AuthContext } from '../App'
 
+import { useContext } from 'react';
 
-export default function NoAuthorized() {
-    const Navigate = useNavigate()
+export default function Home({ navigation }) {
+    const { auth, setAuth } = useContext(AuthContext)
     return (
-        <SafeAreaView>
-            <View style={styles.container}>
-                <Card style={styles.card}>
-                    <Card.Title title="Bienvenido"  subtitle="Classroom"/>
-                    <Card.Content style={styles.card}>
-                        <Text variant="bodyMedium">
-                            Classroom es una aplicación para cursos, generados por Eje4
-                        </Text>
-                    </Card.Content>
+        <View style={styles.container}>
+            <Card style={styles.card}>
+                <Card.Title title="Bienvenido" subtitle="Classroom" />
+                <Card.Content style={styles.card}>
+                    <Text variant="bodyMedium">
+                        Classroom es una aplicación para cursos, generados por Eje4
+                    </Text>
+                </Card.Content>
+                <StatusBar style="auto" />
+                <Card.Actions>
+                    {(auth?.role === "Admin")
+                        ?
+                        (<Button onPress={() => navigation.navigate('Estadisticas')}>Ver Estadisticas</Button>)
+                        :
+                        (<Button onPress={() => navigation.navigate('Login')}>Login</Button>)}
+                </Card.Actions>
+            </Card>
+        </View>
 
-
-                    <StatusBar style="auto" />
-                    <Card.Actions>
-                        <Button onPress={()=>Navigate('/Login')}>Login</Button>
-                    </Card.Actions>
-                </Card>
-            </View>
-            </SafeAreaView>
-        
     );
 }
 
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
         minWidth: '80%'
     },
     cardBody: {
-        
+
         justifyContent: 'center',
         alignItems: 'center',
         minWidth: '100%',

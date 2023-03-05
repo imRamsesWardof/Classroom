@@ -1,10 +1,10 @@
 import * as React from "react";
 import { NativeRouter, Routes, Route, Outlet } from "react-router-native";
 import { StyleSheet, View, Text } from 'react-native';
-import Login from '../Views/Login'
-import NoAuthorized from '../Views/NoAuthorized'
-import Statistics from '../Views/Statistics'
-import Home from '../Views/Home'
+import Login from '../views/Login'
+import NoAuthorized from '../views/NoAuthorized'
+import Statistics from '../views/Statistics'
+import Home from '../views/Home'
 import ProtectedRoutes from '../ProtectedRoutes'
 
 export default function MobileRoutes() {

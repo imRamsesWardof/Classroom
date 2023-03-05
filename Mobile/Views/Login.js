@@ -1,20 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { AppRegistry } from 'react-native';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, TextInput, Card } from 'react-native-paper';
 import { useState, useContext, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigate } from "react-router-native";
 import { AuthContext } from '../App'
 
 
-export default function Login() {
+export default function Login( {navigation} ) {
     const { auth, setAuth } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(true)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [disableLogin, setDisableLogin] = useState(true)
-    const Navigate = useNavigate()
+
     useEffect(() => {
         console.log(auth)
     }, [auth])
@@ -30,23 +27,21 @@ export default function Login() {
                 'Content-Type': 'application/json',
                 'mode': 'CORS'
             }
+        })  
+        .then(response => {
+            if (!response.ok) {
+              return response.json()
+                .then(error => Promise.reject(`${response.status} ${response.statusText}: ${error.message}`));
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setAuth({ role: data.role, token: data.token })
+            navigation.navigate('Estadisticas')
         })
-            .then(response => {
-                if (!response.ok) {
-                    alert(response.error)
-                }
-                return response.json()
-            })
-            .then((data) => {
-                console.log(data)
-                setAuth({role: data.role, token: data.token})
-                Navigate('/Admin/Estadisticas')
-            })
-            .catch((error) => {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-                console.log(error)
-                throw error;
-            })
+          .catch(error => {
+            alert(error);
+          });
     }
 
     useEffect(() => {
@@ -58,8 +53,10 @@ export default function Login() {
         }
     }, [username, password])
     return (
-        <SafeAreaView>
-            <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+
                 <Card style={styles.card}>
                     <Card.Title title="Login" subtitle="Ingresa los Datos" />
                     <Card.Content style={styles.card}>
@@ -79,16 +76,14 @@ export default function Login() {
                         >
                         </TextInput>
                     </Card.Content>
-
-
                     <StatusBar style="auto" />
                     <Card.Actions>
                         <Button disabled={disableLogin} onPress={() => loginAPI()}>Login</Button>
-                        <Button onPress={() => Navigate('/NoAuthorizado')}>No Autorizado</Button>
+                        <Button onPress={() => navigation.navigate('NoAutorizado')}>No Autorizado</Button>
                     </Card.Actions>
                 </Card>
-            </View>
-        </SafeAreaView>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
 
     );
 }
@@ -96,6 +91,7 @@ export default function Login() {
 
 const styles = StyleSheet.create({
     container: {
+        position: 'relative', 
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',

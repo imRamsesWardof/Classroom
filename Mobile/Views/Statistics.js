@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native';
 import { Card, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import LogOut from '../components/LogOut'
 
 export default function Statistics() {
     return (
-        <SafeAreaView>
             <View style={styles.container}>
                 <Card style={styles.card}>
                     <Card.Title title="Bienvenido"  subtitle="Classroom"/>
@@ -13,9 +13,11 @@ export default function Statistics() {
                             Bienvenidos a las Estadísticas
                         </Text>
                     </Card.Content>
+                    <Card.Actions>
+                        <LogOut/>
+                    </Card.Actions>
                 </Card>
             </View>
-            </SafeAreaView>
         
     );
 }

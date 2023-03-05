@@ -1,15 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput, Card, Text } from 'react-native-paper';
-import { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigate } from "react-router-native";
 
 
-export default function NoAuthorized() {
-    const Navigate = useNavigate()
+export default function NoAuthorized( {navigation} ) {
     return (
-        <SafeAreaView>
             <View style={styles.container}>
                 <Card style={styles.card}>
                     <Card.Title title="No autorizado" />
@@ -18,15 +13,12 @@ export default function NoAuthorized() {
                             Este contenido es sólo para administradores.
                         </Text>
                     </Card.Content>
-
-
                     <StatusBar style="auto" />
                     <Card.Actions>
-                        <Button onPress={()=>Navigate('/Login')}>Login</Button>
+                        <Button onPress={()=>navigation.goBack()}>Regresar</Button>
                     </Card.Actions>
                 </Card>
             </View>
-            </SafeAreaView>
         
     );
 }
