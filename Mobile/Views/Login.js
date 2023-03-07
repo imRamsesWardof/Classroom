@@ -19,7 +19,7 @@ export default function Login( {navigation} ) {
             Username: username,
             Password: password
         };
-        fetch('http://192.168.86.21:4000/LoginMobile', {
+        fetch('http://192.168.0.177:4000/LoginMobile', {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
