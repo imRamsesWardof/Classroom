@@ -16,6 +16,7 @@ import MenuAdminClass from './MenuAdminClass';
 import ListDetails from './ListDetails';
 import ListAssign from './ListAssign';
 import LogIn from './Login';
+import NoAuth from './NoAuthorized';
 
 class App extends React.Component {
   render() {
@@ -38,6 +39,7 @@ class App extends React.Component {
         <Route path="/" element={<h1>Default Page</h1>}></Route>
         <Route path="/Home" element={<h1>Home Page</h1>}></Route>
         <Route path="/Login" element={<LogIn/>}></Route>
+        <Route path="/NoAuthorized" element={<NoAuth/>}></Route>
         <Route path="/Register" element={<h1>Register Page</h1>}></Route>
         <Route path="/Test" element={<h1>Test Page</h1>}></Route>
         <Route path="/*" element={<h1>Error Page</h1>}></Route>

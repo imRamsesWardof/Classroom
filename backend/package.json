@@ -66,6 +66,7 @@
     "negotiator": "^0.6.3",
     "nopt": "^1.0.10",
     "normalize-path": "^3.0.0",
+    "notistack": "^3.0.0",
     "object-inspect": "^1.12.3",
     "on-finished": "^2.4.1",
     "on-headers": "^1.0.2",

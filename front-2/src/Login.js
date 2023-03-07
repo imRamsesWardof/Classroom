@@ -3,17 +3,14 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
+import { useSnackbar } from 'notistack'
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Typography from '@mui/material/Typography';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -30,7 +27,9 @@ function Copyright(props) {
 
 export default function LogIn() {
     const navigate = useNavigate();
-    const location = useLocation();
+
+    const { enqueueSnackbar } = useSnackbar();
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -47,18 +46,21 @@ export default function LogIn() {
         })
             .then(response => {
                 if (!response.ok) {
-                    alert("Something went wrong");
+                    enqueueSnackbar('Password or user incorrect', {
+                        variant: 'error',
+                    });
                 }
                 else {
-                    console.log(response);
-                    console.log("OK");
-                    return response.json();
+                    enqueueSnackbar('Login successful', {
+                        variant: 'success'
+                    });
+                    navigate('/');
                 }
+                return response.json();
             })
-            .then(data => {
-                console.log(data);
-                navigate('/Login');
-            })
+            // .then(data => {
+            //     navigate('/Login');
+            // })
             .catch(error => {
                 alert(error)
             });
@@ -68,7 +70,7 @@ export default function LogIn() {
         <Grid container component="main" sx={{ height: '100vh' }}>
             <CssBaseline />
             <Grid item md={12} sx={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Paper sx={{ p: 8, margin: 30, maxWidth: 500, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Paper elevation={6} sx={{ p: 8, margin: 30, maxWidth: 500, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                         <HistoryEduIcon />
                     </Avatar>

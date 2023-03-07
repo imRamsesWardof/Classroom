@@ -6,9 +6,9 @@ import App from '../App';
 function IndexRoutes() {
   return (
     <BrowserRouter>
-    <SnackbarProvider maxSnack={3}>
-      <App/>
-    </SnackbarProvider>
+      <SnackbarProvider maxSnack={3}>
+        <App />
+      </SnackbarProvider>
     </BrowserRouter>
   );
 }
