@@ -61,11 +61,13 @@ export const PutTeacher = async (req, res) => {
     var date = new Date();
     date.toString();
 
+    const passwordHash = await encrypt(Password);
+
     const [result] = await pool.query("CALL PutUser( ?, ?, ?, ?, ?, ?)", [
       Id,
       Name,
       Username,
-      Password,
+      passwordHash,
       IsActive,
       date,
     ]);

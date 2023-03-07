@@ -31,7 +31,7 @@ export const GetClass = async (req, res) => {
 
 export const PostClass = async (req, res) => {
   try {
-    const { Title, Description, User_Id, StartDate, EndDate } = req.body;
+    const { Title, Description, Teacher_Id, StartDate, EndDate } = req.body;
     let Id = uuidv4();
     var date = new Date();
     date.toString();
@@ -41,7 +41,7 @@ export const PostClass = async (req, res) => {
       Id,
       Title,
       Description,
-      User_Id,
+      Teacher_Id,
       StartDate,
       EndDate,
       IsActive,
@@ -62,7 +62,7 @@ export const PostClass = async (req, res) => {
 export const PutClass = async (req, res) => {
   try {
     const { Id } = req.params;
-    const { Title, Description, User_Id, StartDate, EndDate } = req.body;
+    const { Title, Description, Teacher_Id, StartDate, EndDate } = req.body;
     var IsActive = true;
     var date = new Date();
     date.toString();
@@ -71,7 +71,7 @@ export const PutClass = async (req, res) => {
       Id,
       Title,
       Description,
-      User_Id,
+      Teacher_Id,
       StartDate,
       EndDate,
       IsActive,

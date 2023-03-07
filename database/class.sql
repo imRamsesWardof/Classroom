@@ -26,7 +26,7 @@ CREATE PROCEDURE PostClass(
         IN IsActive_ BIT,
         IN Date_ DATETIME)
 BEGIN
-	INSERT INTO `class` (`Id`, `Title`, `Description`, `Teacher_Id`, `StartDate`, `EndDate`) VALUES 
+	INSERT INTO `class`VALUES 
     (Id, Title, Description, User_Id, StartDate, EndDate, IsActive_, Date_);
 END //
 DELIMITER ;
@@ -67,3 +67,5 @@ BEGIN
     (Id, User_Id, Class_Id);
 END //
 DELIMITER ;
+
+
