@@ -8,7 +8,7 @@ export const GetClasses = async (req, res) => {
   } catch (error) {
     console.log(error)
     return res.status(500).json({
-      message: "Something goes wrong trying to GetClass",
+      message: "Something goes wrong trying to GetClasses",
     });
   }
 }
@@ -19,28 +19,33 @@ export const GetClass = async (req, res) => {
 
     if (rows[0].length <= 0)
       return res.status(404).json({
-        message: "Rol no encontrado",
+        message: "Clase no encontrada",
       });
     res.send(rows[0]);
   } catch (error) {
     return res.status(500).json({
-      message: "Something goes wrong",
+      message: "Something goes wrong trying to GetClass",
     });
   }
 };
 
 export const PostClass = async (req, res) => {
   try {
-    const { Title, Description, User_Id, StartDate, EndDate } = req.body;
+    const { Title, Description, Teacher_Id, StartDate, EndDate } = req.body;
     let Id = uuidv4();
+    var date = new Date();
+    date.toString();
+    let IsActive = true
 
-    const [rows] = await pool.query("CALL PostClass(?, ?, ?, ?, ?, ?)", [
+    const [rows] = await pool.query("CALL PostClass(?, ?, ?, ?, ?, ?, ?, ?)", [
       Id,
       Title,
       Description,
-      User_Id,
+      Teacher_Id,
       StartDate,
-      EndDate
+      EndDate,
+      IsActive,
+      date
     ]);
     res.send({
       Id: rows.insertId,
@@ -49,7 +54,7 @@ export const PostClass = async (req, res) => {
   } catch (error) {
     console.log(error)
     return res.status(500).json({
-      message: "Something goes wrong",
+      message: "Something goes wrong trying to PostClass",
     });
   }
 };
@@ -57,7 +62,7 @@ export const PostClass = async (req, res) => {
 export const PutClass = async (req, res) => {
   try {
     const { Id } = req.params;
-    const { Title, Description, User_Id, StartDate, EndDate } = req.body;
+    const { Title, Description, Teacher_Id, StartDate, EndDate } = req.body;
     var IsActive = true;
     var date = new Date();
     date.toString();
@@ -66,7 +71,7 @@ export const PutClass = async (req, res) => {
       Id,
       Title,
       Description,
-      User_Id,
+      Teacher_Id,
       StartDate,
       EndDate,
       IsActive,
@@ -81,7 +86,7 @@ export const PutClass = async (req, res) => {
     res.json(rows[0]);
   } catch (error) {
     return res.status(500).json({
-      message: "Something goes wrong",
+      message: "Something goes wrong trying to PutClass",
     });
   }
 };
@@ -105,26 +110,23 @@ export const DeleteClass = async (req, res) => {
   } catch (error) {
     console.log(error)
     return res.status(500).json({
-      message: "Something goes wrong",
+      message: "Something goes wrong trying to DeleteClass",
     });
   }
 };
 
 export const AssignClass = async (req, res) => {
   try {
-    const values = req.body;  // It supposed to be an array of StudentsID
-    console.log('ARRAY DE ID',req.body);
-    /* console.log(values)
-    console.log(req.params.Id) */
+    const values = req.body;  
+
     for (const element of values) {
       const Id = uuidv4();
-      /* console.log(Id)
-      console.log(element) */
       const [result] = await pool.query("CALL AssignClass(?, ?, ?)", [
         Id,
         element,
         req.params.Id
       ]);
+
       if (result.affectedRows <= 0) {
         return res.status(404).json({
           message: "Clase no encontrada",
@@ -136,7 +138,7 @@ export const AssignClass = async (req, res) => {
   } catch (error) {
     console.log(error)
     return res.status(500).json({
-      message: "Something goes wrong",
+      message: "Something goes wrong trying to AssignClass",
     });
   }
 };

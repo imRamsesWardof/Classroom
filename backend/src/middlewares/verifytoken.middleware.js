@@ -13,7 +13,7 @@ export const validateToken = (req, res, next) => {
 
   jwt.verify(token, process.env.TOKEN_KEY , (err, user) => {
     if(err){
-      res.send('Acceso denegado, tu token ha expirado o es incorrecto.')
+      res.send('Acceso denegado, tu token ha expirado o es incorrecto')
     }else {
       next();
     }

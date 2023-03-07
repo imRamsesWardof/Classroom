@@ -14,6 +14,14 @@ INSERT INTO `classroom`.`role`
 VALUES
 ('dc3c2a78-abe4-11ed-82cc-ace2d36b47fa', 'Student', 1, NOW());
 
+INSERT INTO `classroom`.`role`
+(`Id`,
+`Type`,
+`IsActive`,
+`Date`)
+VALUES
+(UUID(), 'Admin', 1, NOW());
+
 
 DELIMITER $$
 CREATE PROCEDURE `GetUser` (

@@ -11,7 +11,6 @@ FROM `classroom`.`role`;
 END
 $$
 
-
 DELIMITER $$
 CREATE PROCEDURE `PostRole` (
 IN Id_ VARCHAR(36),

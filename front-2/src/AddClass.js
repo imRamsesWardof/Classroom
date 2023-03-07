@@ -42,6 +42,16 @@ function AddClass(props){
   const [errorDate, setErrorDate] = useState('')
 
   useEffect(() => {
+    if(title === '' || description === '' || teacherid === "" || errorDate !== ''){
+      setDisabled(true)
+    }
+    else{
+      setDisabled(false)
+    }
+  }, [title, description, teacherid, errorDate])
+
+
+  useEffect(() =>{
     if (dayjs(startDate).toDate().getTime() > dayjs(endDate).toDate().getTime()){
       setErrorDate("La fecha de finalización se muestra que es antes de la de inicio, favor de verificar")
     }
