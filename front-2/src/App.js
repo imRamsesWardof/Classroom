@@ -1,9 +1,5 @@
 import React, { useState, useMemo } from "react";
 import { Outlet, Link, Routes, Route } from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
 import AppAdmin from './AppAdmin';
 import AdminLayout from './AdminLayout';
 import UserData from './UserData';
@@ -18,6 +14,7 @@ import LogIn from './Login';
 import NoAuth from './NoAuthorized';
 import { createContext } from 'react';
 import NavBar from './NavBar';
+import ProtectedRoutes from "./ProtectedRoutes";
 
 export const UserContext = createContext();
 
@@ -28,15 +25,15 @@ export default function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <NavBar />
       <Routes>
-        <Route path="/" element={JSON.stringify(user)}></Route>
+        <Route path="/" element={<h1>Current user: {JSON.stringify(user)}</h1>}></Route>
         <Route path="/Home" element={<h1>Home Page</h1>}></Route>
         <Route path="/Login" element={<LogIn />}></Route>
         <Route path="/NoAuthorized" element={<NoAuth />}></Route>
         <Route path="/Register" element={<h1>Register Page</h1>}></Route>
         <Route path="/Test" element={<h1>Test Page</h1>}></Route>
         <Route path="/*" element={<h1>Error Page</h1>}></Route>
-        <Route path="/Admin" element={<AdminLayout />}>
-          <Route index element={<Typography textAlign="center">Bienvenido Admin</Typography>}></Route>
+        <Route path="/Admin" element={<ProtectedRoutes role="Admin" />}>
+          <Route index element={<AdminLayout />}></Route>
           <Route path="Classes" element={<AppAdmin actualCrud="Clase" />}>
             <Route index element={<MenuAdminClass role="Classes" />}></Route>
             <Route path='Add' element={<AddClass action="Post" />}></Route>
@@ -56,8 +53,19 @@ export default function App() {
             <Route path='Delete/:id' element={<DeleteModal role="Student" id='21965c0a-56e9-4425-a1c4-78649c996d71' />}></Route>
           </Route>
         </Route>
+        {/* LAS SIGUIENTES RUTAS SON DE PRUEBA: */}
+        <Route path="/Teachers" element={<ProtectedRoutes role="Teacher" />}>
+          <Route index element={<h1>Welcome Teacher</h1>}></Route>
+        </Route>
+
+        <Route path="/Students" element={<ProtectedRoutes role="Student" />}>
+          <Route index element={<h1>Welcome Student</h1>}></Route>
+          <Route path="CurrentClass" element={<h1>Chemistry</h1>}>
+            <Route index element={<h1>U are in Chemistry class</h1>}></Route>
+          </Route>
+        </Route>
       </Routes>
-    </UserContext.Provider>
+    </UserContext.Provider >
     <Outlet />
   </>)
 }

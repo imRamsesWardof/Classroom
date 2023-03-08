@@ -28,7 +28,7 @@ function Copyright(props) {
 }
 
 export default function LogIn() {
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const navigate = useNavigate();
 
