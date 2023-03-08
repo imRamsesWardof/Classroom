@@ -11,6 +11,8 @@ import Grid from '@mui/material/Grid';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from './App';
 
 function Copyright(props) {
     return (
@@ -26,6 +28,8 @@ function Copyright(props) {
 }
 
 export default function LogIn() {
+    const { user, setUser } = useContext(UserContext);
+
     const navigate = useNavigate();
 
     const { enqueueSnackbar } = useSnackbar();
@@ -39,7 +43,7 @@ export default function LogIn() {
             "Password": data.get('Password'),
         })
 
-        fetch('/LoginWeb', {
+        fetch('http://localhost:4000/LoginWeb', {
             method: 'POST',
             body: accessData,
             headers: { 'Content-Type': 'application/json' }
@@ -58,11 +62,13 @@ export default function LogIn() {
                 }
                 return response.json();
             })
-            // .then(data => {
-            //     navigate('/Login');
-            // })
+            .then(data => {
+                console.log(data);
+                // {message: '!Login exitoso, Inicia sesión!', role: 'Teacher', token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwM…jc4fQ.FvaacbLCYqa8P6PPVf4_cAPdyyxg3s2gdhYj_7W2KHI'}
+                setUser({ role: data.role, token: data.token });
+            })
             .catch(error => {
-                alert(error)
+                alert(error);
             });
     };
 
@@ -75,7 +81,8 @@ export default function LogIn() {
                         <HistoryEduIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Log In
+                        LogIn
+                        {/* Log In, {JSON.stringify(user)} */}
                     </Typography>
 
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, justify: 'center' }}>
@@ -83,10 +90,6 @@ export default function LogIn() {
                             name="Username" autoComplete="email" autoFocus />
                         <TextField margin="normal" required fullWidth name="Password" label="Password"
                             type="Password" id="password" autoComplete="current-password" />
-                        {/* <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        /> */}
                         <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, marginLeft: 'auto' }}>
                             Log In
                         </Button>
