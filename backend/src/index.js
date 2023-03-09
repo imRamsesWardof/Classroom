@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import indexRoutes from "./routes/index.routes.js";
 import router from "./routes/index.routes.js";
 
 const app = express();
@@ -10,8 +11,7 @@ app.use(express.json());
 app.listen(4000);
 app.use(cors({'origin': '*'}));
 app.use(morgan("dev"));
-
-// Router
+app.use(indexRoutes);
 app.use(router);
 
 app.use((req, res, next) => {
