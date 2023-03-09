@@ -16,6 +16,8 @@ import MenuAdminClass from './MenuAdminClass';
 import ListDetails from './ListDetails';
 import ListAssign from './ListAssign';
 import LogIn from './Login';
+import StudentHome from './views/StudentHome/StudentHome.jsx';
+import TeacherHome from './views/TeacherHome/TeacherHome.jsx';
 
 class App extends React.Component {
   render() {
@@ -39,6 +41,8 @@ class App extends React.Component {
         <Route path="/Home" element={<h1>Home Page</h1>}></Route>
         <Route path="/Login" element={<LogIn/>}></Route>
         <Route path="/Register" element={<h1>Register Page</h1>}></Route>
+        <Route path="/Students" element={<StudentHome/>}></Route>
+        <Route path="/Teachers" element={<TeacherHome/>}></Route>
         <Route path="/Test" element={<h1>Test Page</h1>}></Route>
         <Route path="/*" element={<h1>Error Page</h1>}></Route>
         <Route path="/Admin" element={<AdminLayout />}>
