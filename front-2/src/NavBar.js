@@ -1,19 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import ButtonLogInOut from './ButtonLogInOut';
 import MenuItem from '@mui/material/MenuItem';
-import { useContext } from 'react';
-import { UserContext } from './App';
-import { useNavigate } from "react-router-dom";
 
-export default function App() {
-    const { setUser } = useContext(UserContext);
-    const navigate = useNavigate();
-    
-    // const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
+export default function NavBar() {
     return (<>
         <AppBar position="static">
             <Toolbar>
@@ -27,7 +20,7 @@ export default function App() {
                     <Typography textAlign="center">Estudiantes</Typography>
                 </MenuItem>
                 <MenuItem>
-                    <Button variant="contained" onClick={()=> { setUser({}); navigate('/Login');}}>LogOut</Button>
+                    <ButtonLogInOut/>
                 </MenuItem>
             </Toolbar>
         </AppBar>

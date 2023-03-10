@@ -50,15 +50,8 @@ export default function LogIn() {
         })
             .then(response => {
                 if (!response.ok) {
-                    enqueueSnackbar('Password or user incorrect', {
-                        variant: 'error',
-                    });
-                }
-                else {
-                    enqueueSnackbar('Login successful', {
-                        variant: 'success'
-                    });
-                    navigate('/');
+                    return response.json()
+                        .then(error => Promise.reject({ message: `${response.status}: ${error.Message}`, severity: error.Severity }));
                 }
                 return response.json();
             })
@@ -66,10 +59,18 @@ export default function LogIn() {
                 console.log(data);
                 // {message: '!Login exitoso, Inicia sesión!', role: 'Teacher', token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwM…jc4fQ.FvaacbLCYqa8P6PPVf4_cAPdyyxg3s2gdhYj_7W2KHI'}
                 setUser({ role: data.role, token: data.token });
+                enqueueSnackbar('Login successful', {
+                    variant: 'success'
+                });
+                navigate('/');
             })
             .catch(error => {
-                alert(error);
+                enqueueSnackbar('Password or user incorrect', {
+                    variant: 'error',
+                });
             });
+
+
     };
 
     return (
