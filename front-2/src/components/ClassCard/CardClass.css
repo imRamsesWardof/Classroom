@@ -2,29 +2,41 @@
 
 .card {
   background-color: #fff;
-  border: black solid 1px;
+  /* border: black solid 1px; */
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:250px;
+  height: 300px;
   font-family: 'Roboto', sans-serif;
-  
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
 }
 
 .card-header {
+  display: flex;
+  align-items: center;
   background-color: #f1f1f1;
   padding: 10px 20px;
+  gap: .5em;
+  height: 70px;
+ 
+}
+
+.card-header__group{
+  overflow: hidden;
 }
 
 .card-body {
   padding: 20px;
-  max-height: 150px;
-  overflow: hidden;
+  height: 150px;
+  text-overflow: ellipsis;
+  
 }
 
 .card-footer {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   background-color: #f1f1f1;
   padding: 20px;
   text-align: right;
@@ -36,9 +48,9 @@
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
-  font-size: 14px;
+  font-size: .8rem;
   font-weight: 500;
-  padding: 8px 16px;
+  padding: 0px 20px;
   transition: background-color 0.2s ease;
 }
 
@@ -47,17 +59,28 @@
 }
 
 .card-header__title-class{
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .card-header__teacher-name{
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   
 }
 
 .card-header__description{
+  font-size: 0.9rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 180px;
+}
+
+.card-footer__btn{
+
 }

@@ -1,16 +1,20 @@
 .student-home{
-  min-height: 89vh;
-  min-width: 89vw;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 1em 0 ;
   display: flex;
-  justify-content: center;
-/*     background: purple; */
+  justify-content: flex-start;
+  flex-flow: column nowrap;
+  overflow: hidden;
+/*   background: purple; */
 }
 
 .student-home__cards{
+  width: auto;
+  margin: 0 auto;
 /*   background: green; */
-  padding: 2.6rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
-  gap: 1.2rem;
+  justify-content: center;
+  gap: 2em;
 }
