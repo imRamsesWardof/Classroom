@@ -20,6 +20,7 @@ export const LoginWeb = async (req, res) => {
         return res.status(200).json({
           message: "¡Login exitoso!",
           role: Role,
+          name: Name,
           token: newToken,
         });
       }
@@ -56,6 +57,7 @@ export const LoginMobile = async (req, res) => {
           return res.status(200).json({
             message: "¡Login exitoso!",
             role: Role,
+            name: Name, 
             token: newToken,
           });
         }

@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, TextInput, Card } from 'react-native-paper';
 import { useState, useContext, useEffect } from 'react';
-import { AuthContext } from '../routes/MobileRoutes'
+import { AuthContext } from '../Routes/MobileRoutes'
 
 export default function Login( {navigation} ) {
     const { auth, setAuth } = useContext(AuthContext)
