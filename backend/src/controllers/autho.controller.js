@@ -8,7 +8,7 @@ export const LoginWeb = async (req, res) => {
   const { Password, Username } = req.body;
 
   try {
-    const [rows] = await pool.query("CALL LogIn (?)", [Username]);
+    const [rows] = await pool.query("CALL Login (?)", [Username]);
 
     if (!(rows[0].length <= 0)) {
       const passwordHash = rows[0][0]["Password"];
@@ -31,6 +31,7 @@ export const LoginWeb = async (req, res) => {
     }); 
 
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "Algo salió mal intentando hacer LoginWeb",
       error: error.toString()
