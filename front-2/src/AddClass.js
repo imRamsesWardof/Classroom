@@ -70,7 +70,7 @@ function AddClass(props){
     let requestData = JSON.stringify({ 
       "Title": title,
       "Description": description, 
-      "User_Id": teacherid, 
+      "Teacher_Id": teacherid, 
       "StartDate": dayjs(startDate).toDate(), 
       "EndDate": dayjs(endDate).toDate() })
     if (props.action === 'Put') {
