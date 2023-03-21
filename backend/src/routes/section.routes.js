@@ -1,9 +1,10 @@
 import {Router} from 'express'
-import { PostSection, PutSection } from '../controllers/section.controller.js'
+import { PostSection, PutSection, GetAllSections, GetSectionData } from '../controllers/section.controller.js'
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { validateToken } from "../middlewares/verifytoken.middleware.js"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const router = Router()
@@ -28,8 +29,12 @@ const storageTeacher = multer.diskStorage({
 
 const uploadTeacher = multer({ storage: storageTeacher })
 
-router.post('/API/Class/:Class_Id/Section/Post', uploadTeacher.array('files', 5), PostSection)
-router.post('/API/Class/:Class_Id/Section/Put/:Section_Id', uploadTeacher.array('files', 5), PutSection)
+router.get('/API/Class/:Class_Id', validateToken, GetAllSections)
+router.post('/API/Class/:Class_Id/Section/Post', validateToken, uploadTeacher.array('files', 5), PostSection)
+router.get('/API/Class/:Class_Id/Section/:Section_Id', validateToken, GetSectionData)
+router.post('/API/Class/:Class_Id/Section/Put/:Section_Id', validateToken, uploadTeacher.array('files', 5), PutSection)
+
+
 
 
 

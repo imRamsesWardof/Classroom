@@ -122,6 +122,53 @@ export const PutSection = async (req, res) => {
     }
 }
 
+export const GetSectionData = async (req, res) => {
+  try {
+    const class_id = req.params.Class_Id
+    const section_id = req.params.Section_Id
+    const role = req.user.role
+    const [rows] = await pool.query("CALL GetSection(?)", [
+      section_id,
+  ]);
+  const [files] = await pool.query("CALL GetFiles(?)", [
+    section_id,
+]);
+    res.send({Section: rows[0], Files: files[0]});
+
+  } catch (error) {
+      console.log(error)
+      return res.status(500).json({
+          message: "Something goes wrong trying to GetAllSections",
+      });
+  }
+}
+
+export const GetAllSections = async (req, res) => {
+  try {
+    const Id = req.params.Class_Id
+    const role = req.user.role
+    if(role === "Teacher"){
+      const [rows] = await pool.query("CALL GetClassSections(?)", [
+        Id
+    ]);
+    res.send(rows[0]);
+    }
+    else if(role === "Student"){
+      const [rows] = await pool.query("CALL GetClassSectionsStudent(?)", [
+        Id
+    ]);
+    res.send(rows[0]);
+    }
+
+    }catch (error) {
+      console.log(error)
+      return res.status(500).json({
+          message: "Something goes wrong trying to GetAllSections",
+      });
+  }
+}
+
+
 /*
 export const PostStudent = async (req, res) => {
   try {
