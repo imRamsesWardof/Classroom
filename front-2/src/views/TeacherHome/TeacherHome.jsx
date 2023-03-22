@@ -1,9 +1,14 @@
 import React from 'react'
+import ClassCardv2 from '../../components/ClassCardv2/ClasCardv2.jsx'
 
 function TeacherHome() {
   return (
-    <div>TeacherHome</div>
+    <div>
+      <ClassCardv2></ClassCardv2>
+    </div>
   )
 }
+
+
 
 export default TeacherHome
