@@ -6,8 +6,6 @@ dotenv.config()
 
 export const LoginWeb = async (req, res) => {
   const { Password, Username } = req.body;
-  console.log(Password)
-  console.log(Username)
   try {
     const [rows] = await pool.query("CALL Login (?)", [Username]);
 

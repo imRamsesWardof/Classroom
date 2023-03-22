@@ -8,7 +8,7 @@ export const PostSection = async (req, res) => {
         var IsActive = true;
         var date = new Date();
         date.toString();
-        let Id = uuidv4();
+        let Id = req.Id
 
 
         const [rows] = await pool.query("CALL PostSection(?, ?, ?, ?, ?, ?, ?, ?, ?)", [
