@@ -21,7 +21,7 @@ const storageTeacher = multer.diskStorage({
       cb(null, dirPath);
     },
     filename: (req, file, cb) => {
-      const filename = `${encodeURI(file.originalname)}`;
+      const filename = Buffer.from(file.originalname, 'latin1').toString('utf8',);
 
       cb(null, filename);
     }
@@ -33,7 +33,6 @@ router.get('/API/Class/:Class_Id', validateToken, GetAllSections)
 router.post('/API/Class/:Class_Id/Section/Post', validateToken, uploadTeacher.array('files', 5), PostSection)
 router.get('/API/Class/:Class_Id/Section/:Section_Id', validateToken, GetSectionData)
 router.post('/API/Class/:Class_Id/Section/Put/:Section_Id', validateToken, uploadTeacher.array('files', 5), PutSection)
-
 
 
 
