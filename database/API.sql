@@ -64,7 +64,7 @@ FROM homework h
 INNER JOIN assignment a ON h.Assignment_Id = a.Id
 INNER JOIN section s ON h.Section_Id = s.Id
 INNER JOIN class c ON a.Class_Id = c.Id
-WHERE a.User_Id = Id_;
+WHERE a.User_Id = Id_ AND c.IsActive = 1 AND s.IsActive = 1;
 END$$
 
 DELIMITER ;
