@@ -6,11 +6,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const storage =  multer.diskStorage({
         destination: (req, file, cb) => {
             console.log(req)
-            const __dirname = path.dirname(fileURLToPath(import.meta.url));
             console.log(__dirname)
             const dirPath = path.join(__dirname, '..', '..', 'files', req.params.Class_Id, req.params.Section_Id);
             console.log(dirPath);
@@ -29,7 +28,7 @@ const storage =  multer.diskStorage({
         }
     });
 
-const uploadStudent = multer({ storage });
+const uploadStudent = multer({ storage: storage });
 
 
 const router = Router();
