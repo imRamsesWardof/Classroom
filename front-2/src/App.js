@@ -32,8 +32,6 @@ export default function App() {
         <Route path="/Login" element={<LogIn />}></Route>
         <Route path="/NoAuthorized" element={<NoAuth />}></Route>
         <Route path="/Register" element={<h1>Register Page</h1>}></Route>
-        <Route path="/Students" element={<StudentHome/>}></Route>
-        <Route path="/Teachers" element={<TeacherHome/>}></Route>
         <Route path="/Test" element={<h1>Test Page</h1>}></Route>
         <Route path="/*" element={<h1>Error Page</h1>}></Route>
         <Route path="/Admin" element={<ProtectedRoutes role="Admin" />}>
@@ -59,11 +57,11 @@ export default function App() {
         </Route>
         {/* LAS SIGUIENTES RUTAS SON DE PRUEBA: */}
         <Route path="/Teachers" element={<ProtectedRoutes role="Teacher" />}>
-          <Route index element={<h1>Welcome Teacher</h1>}></Route>
+          <Route index element={<TeacherHome/>}></Route>
         </Route>
 
         <Route path="/Students" element={<ProtectedRoutes role="Student" />}>
-          <Route index element={<h1>Welcome Student</h1>}></Route>
+          <Route index element={<StudentHome/>}></Route>
           <Route path="CurrentClass" element={<h1>Chemistry</h1>}>
             <Route index element={<h1>U are in Chemistry class</h1>}></Route>
           </Route>
