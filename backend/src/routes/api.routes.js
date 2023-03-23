@@ -1,19 +1,13 @@
 import {Router} from 'express';
-import {GetClasses, UploadHW} from '../controllers/api.controller.js';
-import { setStorage } from '../middlewares/storage.middleware.js';
+import {GetClasses, UploadHW, DeleteSection, StudentNotifications} from '../controllers/api.controller.js';
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
 
 const storageStudent =  multer.diskStorage({
         destination: (req, file, cb) => {
-            console.log(req)
-            console.log(__dirname)
             const classPath = path.join(__dirname, '..', '..', '..', 'files', req.params.Class_Id);
             const dirPath = path.join(classPath, req.params.Section_Id)
-            console.log(classPath);
             if (!fs.existsSync(classPath)) {
                 fs.mkdirSync(classPath);
             }
@@ -26,7 +20,7 @@ const storageStudent =  multer.diskStorage({
         },
         filename: (req, file, cb) => {
             var Id =  req.user.id;
-            const filename = Id + '-' + `${Buffer.from(file.originalname, 'latin1').toString('utf8',)}`;
+            const filename = Id + '-' + `${Buffer.from(file.originalname, 'latin1').toString('utf8')}`;
             req.FileName = filename;
             cb(null, filename);
         }
@@ -38,6 +32,9 @@ const uploadStudent = multer({ storage: storageStudent });
 const router = Router();
 
 router.post('/Student/Class/:Class_Id/Section/:Section_Id', uploadStudent.single('file'), UploadHW);
+router.get('/Student/HW', StudentNotifications);
+router.post('/Class/:Class_Id/Section/:Section_Id/Delete', DeleteSection);
 router.get('/Classes/Get', GetClasses);
+
 
 export default router

@@ -40,5 +40,33 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE `APIDeleteSection` (
+IN Section_Id_ VARCHAR(36)
+)
+BEGIN 
+UPDATE section SET IsActive = 0 WHERE Id = Section_Id_;
+UPDATE homework SET IsActive = 0 WHERE Section_Id = Section_Id_;
+END
+$$ DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `APIGetNotifications`(
+IN Id_ VARCHAR(36)
+)
+BEGIN 
+SELECT
+h.Section_Id,
+s.Name AS SectionName,
+c.Title AS ClassName,
+c.EndDate
+FROM homework h
+INNER JOIN assignment a ON h.Assignment_Id = a.Id
+INNER JOIN section s ON h.Section_Id = s.Id
+INNER JOIN class c ON a.Class_Id = c.Id
+WHERE a.User_Id = Id_;
+END$$
+
+DELIMITER ;
 
 
