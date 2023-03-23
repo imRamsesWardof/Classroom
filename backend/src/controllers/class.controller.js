@@ -118,13 +118,18 @@ export const DeleteClass = async (req, res) => {
 export const AssignClass = async (req, res) => {
   try {
     const values = req.body;  
+    var IsActive = true;
+    var date = new Date();
+    date.toString();
 
     for (const element of values) {
       const Id = uuidv4();
-      const [result] = await pool.query("CALL AssignClass(?, ?, ?)", [
+      const [result] = await pool.query("CALL AssignClass(?, ?, ?, ?, ?)", [
         Id,
         element,
-        req.params.Id
+        req.params.Id,
+        IsActive,
+        date,
       ]);
 
       if (result.affectedRows <= 0) {
@@ -133,7 +138,7 @@ export const AssignClass = async (req, res) => {
         });
       }
     }
-    return res.status(500).json({
+    return res.status(200).json({
       message: "yai",})
   } catch (error) {
     console.log(error)
