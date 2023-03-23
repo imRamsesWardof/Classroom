@@ -3,6 +3,9 @@ import {GetClasses, UploadHW, DeleteSection, StudentNotifications} from '../cont
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const storageStudent =  multer.diskStorage({
         destination: (req, file, cb) => {

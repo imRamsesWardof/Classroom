@@ -22,7 +22,6 @@ export const GetClasses = async (req, res) => {
 
 export const UploadHW = async (req, res) => {
     var User_Id = req.user.id;
-    console.log(User_Id)
     try {
         const { Class_Id, Section_Id } = req.params;
         let Homework_Id = uuidv4();
@@ -32,18 +31,17 @@ export const UploadHW = async (req, res) => {
         let IsCompleted = true;
         let Type = true;
         console.log("enter")
-        console.log(req.dirPath + "/" + FileName)
 
-        // const [rows] = await pool.query("CALL APIUploadHW(?, ?, ?, ?, ?, ?, ?, ?)", [
-        // console.log(User_Id,
-        // Homework_Id,
-        // Section_Id,
-        // File_Id,
-        // Route,
-        // FileName,
-        // IsCompleted,
-        // Type)
-        // ]);
+        const [rows] = await pool.query("CALL APIUploadHW(?, ?, ?, ?, ?, ?, ?, ?)", [
+        User_Id,
+        Homework_Id,
+        Section_Id,
+        File_Id,
+        Route,
+        FileName,
+        IsCompleted,
+        Type
+        ]);
     } catch (error) {
         console.log(error)
         return res.status(500).json({
