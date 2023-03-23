@@ -32,7 +32,7 @@ export const UploadHW = async (req, res) => {
         let IsCompleted = true;
         let Type = true;
         console.log("enter")
-        console.log(req.dirPath + "/" + FileName)
+        console.log(Route + "/" + FileName)
 
         // const [rows] = await pool.query("CALL APIUploadHW(?, ?, ?, ?, ?, ?, ?, ?)", [
         // console.log(User_Id,
