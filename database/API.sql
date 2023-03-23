@@ -26,7 +26,6 @@ CREATE PROCEDURE `APIUploadHW`(
 )
 BEGIN
     DECLARE Assignment_Id VARCHAR(36); 
-    DECLARE File_Id VARCHAR(36); 
     
     INSERT INTO file (Id, Route, FileName, Type, Section_Id)
     VALUES (File_Id, Route, FileName, Type, Section_Id);
