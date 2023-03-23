@@ -25,7 +25,14 @@ export default function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <NavBar />
       <Routes>
-        <Route path="/" element={<h1>Current user: {JSON.stringify(user)}</h1>}></Route>
+        <Route path="/" element={
+          <div>
+            <h1>Current user: {JSON.stringify(user)}</h1>
+            <form action="API/Student/Class/9f55be9f-5ee1-4ae8-aabd-185850577ea5/Section/5be9373e-c830-11ed-a6a7-0c54a51ac93f" method="post" enctype="multipart/form-data">
+              <input type="file" name="file" multiple/><button type="submit">ENVIAR</button>
+            </form>
+          </div>}>
+        </Route>
         <Route path="/Home" element={<h1>Home Page</h1>}></Route>
         <Route path="/Login" element={<LogIn />}></Route>
         <Route path="/NoAuthorized" element={<NoAuth />}></Route>
