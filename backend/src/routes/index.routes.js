@@ -5,6 +5,8 @@ import studentRoutes from "./student.routes.js";
 import teacherRoutes from "./teacher.routes.js";
 import roleRoutes from "./role.routes.js";
 import loginRoutes from "./autho.routes.js";
+import sectionRoutes from "./section.routes.js";
+import fileRoutes from "./file.routes.js";
 import apiRoutes from "./api.routes.js";
 import { validateToken } from "../middlewares/verifytoken.middleware.js"
 
@@ -15,7 +17,8 @@ router.use('/Class', validateToken, classRoutes);
 router.use('/Student', validateToken, studentRoutes);
 router.use('/Teacher', validateToken, teacherRoutes);
 router.use('/Role', validateToken, roleRoutes);
-
+router.use(validateToken, sectionRoutes);
+router.use(fileRoutes);
 router.use('/API', apiRoutes);
 router.get('/ping', ping);
 

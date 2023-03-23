@@ -25,9 +25,8 @@ export const GetClasses = async (req, res) => {
 };
 
 export const UploadHW = async (req, res) => {
-    const token = req.headers['authorization'];
-    var User_Id = await obtainId(token);
-
+    var User_Id = req.user.id;
+    console.log(User_Id)
     try {
         const { Class_Id, Section_Id } = req.params;
         let Homework_Id = uuidv4();
@@ -49,6 +48,7 @@ export const UploadHW = async (req, res) => {
             Type
         ]);
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             message: "Something goes wrong trying to APIUploadHW",
         });

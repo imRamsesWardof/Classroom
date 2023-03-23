@@ -6,13 +6,17 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const storage =  multer.diskStorage({
+
+const storageStudent =  multer.diskStorage({
         destination: (req, file, cb) => {
             console.log(req)
             console.log(__dirname)
-            const dirPath = path.join(__dirname, '..', '..', 'files', req.params.Class_Id, req.params.Section_Id);
-            console.log(dirPath);
+            const classPath = path.join(__dirname, '..', '..', '..', 'files', req.params.Class_Id);
+            const dirPath = path.join(classPath, req.params.Section_Id)
+            console.log(classPath);
+            if (!fs.existsSync(classPath)) {
+                fs.mkdirSync(classPath);
+            }
             if (!fs.existsSync(dirPath)) {
                 fs.mkdirSync(dirPath);
             }
@@ -21,14 +25,14 @@ const storage =  multer.diskStorage({
             cb(null, dirPath);
         },
         filename: (req, file, cb) => {
-            var Id =  obtainId(req.headers.authorization.split(' ')[1]);
-            const filename = Id + '-' + `${encodeURI(file.originalname)}`;
+            var Id =  req.user.id;
+            const filename = Id + '-' + `${Buffer.from(file.originalname, 'latin1').toString('utf8',)}`;
             req.FileName = filename;
             cb(null, filename);
         }
     });
 
-const uploadStudent = multer({ storage: storage });
+const uploadStudent = multer({ storage: storageStudent });
 
 
 const router = Router();
