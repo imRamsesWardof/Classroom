@@ -30,6 +30,7 @@ export const LoginWeb = async (req, res) => {
     }); 
 
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "Algo salió mal intentando hacer LoginWeb",
       error: error.toString()
