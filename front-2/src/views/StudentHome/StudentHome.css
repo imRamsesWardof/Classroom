@@ -1,20 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .student-home{
   min-height: 100vh;
   min-width: 100vw;
-  padding: 1em 0 ;
+  padding: 2em 6em;
   display: flex;
   justify-content: flex-start;
   flex-flow: column nowrap;
   overflow: hidden;
+  font-family: 'Roboto', sans-serif;
 /*   background: purple; */
 }
 
 .student-home__cards{
-  width: auto;
-  margin: 0 auto;
+  margin: 10px auto;
 /*   background: green; */
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2em;
+}
+
+.student-home__my-classes{
+  display: flex;
+  justify-content: flex-start;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #0a0909;
+}
+
+.my-class__p{
+  text-align: start;
+  color: #0a0909;
 }

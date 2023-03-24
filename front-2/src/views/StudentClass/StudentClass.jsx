@@ -1,7 +1,3 @@
-
-import './StudentHome.css'
-import CardClass from '../../components/ClassCard/CardClass.jsx'
-import NavBar from '../../components/NavBar/NavBar.jsx'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -11,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import React, { useState, useEffect, useContext } from "react";
+import "./StudentClass.css";
 import { Avatar } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import { Divider } from "antd";
@@ -22,51 +19,21 @@ const { Header, Sider, Content } = Layout;
 
 const App = () => {
   const { user, setUser } = useContext(UserContext);
-  const [rows, setRows] = useState([])
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/API/Class/9f55be9f-5ee1-4ae8-aabd-185850577ea5", {
-          headers: {
-            Authorization: "Token " + user.token,
-            "Content-Type": "application/json",
-          },
-        });
+      const headers = {
+        Authorization: 'Bearer ' + user.token
+      };
 
-        const newArray = await response.data.slice();
-        setRows(newArray)
-        
-      } catch (error) {
-        console.error(error);
-      }
+      const result = await axios.get('http://localhost:4000/API/Class/9f55be9f-5ee1-4ae8-aabd-185850577ea5', { headers });
+      setData(result.data);
     };
 
-    fetchData()
-  }, []);
+    fetchData();
+  }, [data]);
 
-      function HandleSections(){
-        console.log('rows',rows)
-
-        rows.map((element) => {
-          return(
-            <Collapsed 
-            Id={element.Id }
-            Name={element.Name}
-            Description={element.Description}
-            StartDate={element.StartDate}
-            EndDate={element.EndDate}
-            Title={element.Title}
-            />
-          )
-        })
-
-      }
-    
-
-
-
-  
 
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -129,16 +96,44 @@ const App = () => {
             overflow: "hidden",
           }}
         >
+          <div class="content-wrapper-header">
+            <div class="content-wrapper-context">
+              <h3 class="img-content">
+                <Avatar sx={{ bgcolor: deepOrange[500] }}>Es</Avatar>
+                Current Class
+              </h3>
+              <div class="content-text">
+                Grab yourself 10 free images from Adobe Stock in a 30-day free
+                trial plan and find perfect image, that will help you with your
+                new project.
+              </div>
+              <p class="content-p">Por Juan Ramse Meza Martinez</p>
+            </div>
+          </div>
 
-          <div className='student-home__my-classes'><p className='my-class__p'>Mis Clases</p></div>
-                <div className='student-home__cards'>
-                  <CardClass id="1" name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  <CardClass id="2"name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  <CardClass id="3"name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  <CardClass id="4"name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  <CardClass id="5" name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  
-                </div>
+          <Divider orientation="center">Tareas</Divider>
+
+          {
+          
+              
+
+             data.map((element) => {
+              
+              return(
+                <Collapsed 
+                Id={element.Id }
+                Name={element.Name}
+                Description={element.Description}
+                StartDate={element.StartDate}
+                EndDate={element.EndDate}
+                Title={element.Title}
+                />
+              )
+            })
+          
+          
+          }
+          <Collapsed/>
         </Content>
       </Layout>
     </Layout>

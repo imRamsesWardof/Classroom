@@ -6,30 +6,31 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Tooltip from '@mui/material/Tooltip';
 import { Folder, Group } from "@mui/icons-material";
+import { useNavigate } from 'react-router-dom'
 
+function CardClass(props) {
 
-function CardClass() {
+  const HandleClick = (e) =>{
+
+    console.log(e.target)
+  }
+  const navigate = useNavigate()
+
   return (
     <div className="card-class">
       <div className="card">
         <div className="card-header">
           <Avatar sx={{ bgcolor: deepOrange[500] }}>Es</Avatar>
           <div className="card-header__group">
-            <label className="card-header__title-class">Español</label>
+            <label className="card-header__title-class"> {props.name}</label>
             <h4 className="card-header__teacher-name">
-              Juan Ramses Meza Martínez
+              {props.teacher_name}
             </h4>
           </div>
         </div>
         <div className="card-body">
           <p className="card-header__description">
-            ebitis. Voluptates harum odio incidunt, suscipit molestias, numquam
-            voluptatum eveniet debitis deleniti accusamus at quasi quisquam
-            minus possimus illum? Optio. Lorem ipsum dolor, sit amet consectetur
-            adipisicing elit. Tenetur officiis consequuntur optio assumenda
-            dicta molestiae sint illo consequatur animi fugit excepturi
-            voluptatibus nihil, non alias iste deleniti, temporibus,
-            perspiciatis possimus?
+            {props.description}
           </p>
         </div>
         <div className="card-footer">
@@ -47,9 +48,8 @@ function CardClass() {
           </Stack>
           <button
             className="btn"
-            onClick={() => {
-              window.location.href =
-                "http://localhost:3000/Admin/Classes/Edit/" + "Class_Id";
+            onClick={(e) => {
+              navigate("/Students/Home/Class/" + props.id.toString())
             }}
           >
             Go
