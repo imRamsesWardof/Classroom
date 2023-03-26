@@ -12,34 +12,21 @@ import { Avatar } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import { Divider } from "antd";
 import Collapsed from "../../components/Collapse.jsx";
-import { UserContext } from "../../App.js";
-import axios from "axios";
-
-const { Header, Sider, Content } = Layout;
+import { GetClasses } from "../../services/class.services";
 
 const App = () => {
-  const { user, setUser } = useContext(UserContext);
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const headers = {
-        Authorization: 'Bearer ' + user.token
-      };
-
-      const result = await axios.get('http://localhost:4000/API/Class/9f55be9f-5ee1-4ae8-aabd-185850577ea5', { headers });
-      setData(result.data);
-    };
-
-    fetchData();
-  }, [data]);
-
-
+  const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
+  const [section, setSection] = useState([]);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  useEffect(() => {
+    const data = GetClasses();
+    setSection(data)
+    console.log('SECTION:', section)
+  }, []);
 
   return (
     <Layout>
@@ -113,27 +100,19 @@ const App = () => {
 
           <Divider orientation="center">Tareas</Divider>
 
-          {
-          
-              
-
-             data.map((element) => {
-              
-              return(
-                <Collapsed 
-                Id={element.Id }
+          {data.map((element) => {
+            return (
+              <Collapsed
+                Id={element.Id}
                 Name={element.Name}
                 Description={element.Description}
                 StartDate={element.StartDate}
                 EndDate={element.EndDate}
                 Title={element.Title}
-                />
-              )
-            })
-          
-          
-          }
-          <Collapsed/>
+              />
+            );
+          })}
+          <Collapsed />
         </Content>
       </Layout>
     </Layout>
