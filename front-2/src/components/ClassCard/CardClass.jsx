@@ -49,7 +49,15 @@ function CardClass(props) {
           <button
             className="btn"
             onClick={(e) => {
-              navigate("/Students/Home/Class/" + props.id.toString())
+              navigate("/Students/Home/Class/" + props.id.toString(),
+              {
+                state: {
+                  class_id: props.id,
+                  class_name: props.name,
+                  teacher_name: props.teacher_name,
+                  description: props.description,
+                }
+              })
             }}
           >
             Go

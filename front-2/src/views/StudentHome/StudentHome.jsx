@@ -1,105 +1,93 @@
+//AXIOS
+import axios from "axios";
 
-import './StudentHome.css'
-import CardClass from '../../components/ClassCard/CardClass.jsx'
-import NavBar from '../../components/NavBar/NavBar.jsx'
+//ANTDESING
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
-import React, { useState, useEffect, useContext } from "react";
+
+//MATERIAL UI
 import { Avatar } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
-import { Divider } from "antd";
-import Collapsed from "../../components/Collapse.jsx";
+import EDIT from "@mui/icons-material/Edit";
+import IconButton from "@mui/material/IconButton";
+
+//REACT
+import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../App.js";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
+//COMPONENTS
+import CardClass from "../../components/ClassCard/CardClass.jsx";
+import NavBar from "../../components/NavBar/NavBar.jsx";
+import Collapsed from "../../components/Collapse.jsx";
+
+//CSS
+import "./StudentHome.css";
 
 const { Header, Sider, Content } = Layout;
 
 const App = () => {
   const { user, setUser } = useContext(UserContext);
-  const [rows, setRows] = useState([])
+  const [classes, setClasses] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [classes_sider, setClasses_sider] = useState([]);
+  const navigate = useNavigate();
 
+  //CLASSES
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/API/Class/9f55be9f-5ee1-4ae8-aabd-185850577ea5", {
-          headers: {
-            Authorization: "Token " + user.token,
-            "Content-Type": "application/json",
-          },
+    axios
+      .get("http://localhost:4000/API/Classes/Get", {
+        headers: {
+          Authorization: "Token " + user.token,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setTimeout(setClasses(response.data), 5000);
+        console.log("CLASSES", classes);
+        const classes_sider = response.data.map((data) => {
+          return {
+            key: data.ClassId,
+            icon: <BookOutlined />,
+            label: data.ClassName,
+            onClick: () => navigate("/Students/Home/Class/" + data.ClassId.toString(), 
+            {
+              state: {
+                class_id: data.ClassId,
+                class_name: data.ClassName,
+                teacher_name: data.TeacherName,
+                description: data.Description,
+              }
+            })
+          };
         });
-
-        const newArray = await response.data.slice();
-        setRows(newArray)
-        
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData()
+        setTimeout(setClasses_sider(classes_sider), 5000);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => console.log("Clasess_Slider", classes_sider));
   }, []);
 
-      function HandleSections(){
-        console.log('rows',rows)
 
-        rows.map((element) => {
-          return(
-            <Collapsed 
-            Id={element.Id }
-            Name={element.Name}
-            Description={element.Description}
-            StartDate={element.StartDate}
-            EndDate={element.EndDate}
-            Title={element.Title}
-            />
-          )
-        })
-
-      }
-    
-
-
-
-  
-
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
 
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
-        Clases
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "nav 1",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
-            },
-          ]}
+          items={classes_sider}
         />
       </Sider>
       <Layout className="site-layout">
@@ -108,6 +96,9 @@ const App = () => {
             padding: "0 24px",
             background: colorBgContainer,
             fontSize: 14,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
           }}
         >
           {React.createElement(
@@ -116,9 +107,10 @@ const App = () => {
               className: "trigger",
               onClick: () => setCollapsed(!collapsed),
             }
-          )}
+            )}
+            <p>Mis Clases</p>
 
-          <p>Current Classs</p>
+            <NavBar></NavBar>
         </Header>
         <Content
           style={{
@@ -129,16 +121,25 @@ const App = () => {
             overflow: "hidden",
           }}
         >
-
-          <div className='student-home__my-classes'><p className='my-class__p'>Mis Clases</p></div>
-                <div className='student-home__cards'>
-                  <CardClass id="1" name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  <CardClass id="2"name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  <CardClass id="3"name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  <CardClass id="4"name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  <CardClass id="5" name="Españo" teacher_name="Juan Ramses Meza Martinez" description="lorem sadf"/>
-                  
-                </div>
+          <div className="student-home__my-classes">
+            <p className="my-class__p">Mis Clases</p>
+          </div>
+          <div className="student-home__cards">
+            {classes.length == 0 ? (
+              <div>No tienes classes asignadas</div>
+            ) : (
+              classes.map((element) => {
+                return (
+                  <CardClass
+                    id={element.ClassId}
+                    name={element.ClassName}
+                    teacher_name={element.TeacherName}
+                    description={element.Description}
+                  />
+                );
+              })
+            )}
+          </div>
         </Content>
       </Layout>
     </Layout>

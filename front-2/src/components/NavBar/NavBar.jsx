@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, {useEffect} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,14 +10,64 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
+//AXIOS
+import axios from "axios";
+
+//REACT
+import { useState, useContext } from 'react';
+import { UserContext } from "../../App.js";
+import { useNavigate } from 'react-router';
+
+//MATERIAL UI
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import ImageIcon from '@mui/icons-material/Image';
+import WorkIcon from '@mui/icons-material/Work';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+
 
 export default function PrimarySearchAppBar() {
+  const { user, setUser } = useContext(UserContext);
+  const [classes, setClasses] = useState([]);
+  const [classes_sider, setClasses_sider] = useState([]);
+  const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/API/Student/HW", {
+        headers: {
+          Authorization: "Token " + user.token,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setTimeout(setNotifications(response.data), 5000);
+        console.log("NOTIFICATIONS", classes);
+        /* const classes_sider = response.data.map((data) => {
+            return (
+              {
+                key: data.ClassId,
+                icon: <BookOutlined/>,
+                label: data.ClassName,
+              }
+            )
+          })
+          setTimeout(setClasses_sider(classes_sider), 5000); */
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => console.log("Clasess_Slider", classes_sider));
+  }, []);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -62,7 +112,16 @@ export default function PrimarySearchAppBar() {
 
       <label>Notificacionessssssssssssssssssss</label>
       <br></br>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+      <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <ImageIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+        </ListItem>
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -85,12 +144,14 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <ImageIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+        </ListItem>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -98,7 +159,7 @@ export default function PrimarySearchAppBar() {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={classes.length} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -120,27 +181,8 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            CLASSROOM
-          </Typography>
-          
+    
+      <>     
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
@@ -165,22 +207,10 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
+  
+
       {renderMobileMenu}
       {renderMenu}
-    </Box>
-  );
+      </>
+  )
 }

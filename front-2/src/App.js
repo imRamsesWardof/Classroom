@@ -18,6 +18,7 @@ import { createContext } from "react";
 import NavBar from "./NavBar";
 import ProtectedRoutes from "./ProtectedRoutes";
 import StudentClasses from "./views/StudentClass/StudentClass.jsx";
+import ShowSection from "./views/ShowSection/ShowSection.jsx";
 
 export const UserContext = createContext();
 
@@ -98,6 +99,7 @@ export default function App() {
           <Route path="/Students" element={<ProtectedRoutes role="Student" />}>
             <Route index element={<StudentHome/>}></Route>
             <Route path="/Students/Home/Class/:id" element={<StudentClasses/>}></Route>
+            <Route path="/Students/Home/Class/Section/:id" element={<ShowSection/>}></Route>
           </Route>
         </Routes>
       </UserContext.Provider>

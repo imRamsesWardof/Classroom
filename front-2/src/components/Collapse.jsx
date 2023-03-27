@@ -9,6 +9,7 @@ const { Panel } = Collapse;
 
 function Collapsed(props) {
   const navigate = useNavigate();
+  const newDate = new Date(props.EndDate).toLocaleString().split(',')[0]
 
   const genExtra = () => {
     return (
@@ -25,7 +26,7 @@ function Collapsed(props) {
             alignItems: "center",
           }}
         >
-          Fecha de entrega: {props.EndDate}
+          Fecha de entrega: {newDate}
         </span>
         <IconButton sx={{}} component={Link} to="/">
           <EDIT />
@@ -61,15 +62,28 @@ function Collapsed(props) {
             verticalAlign: "middle",
           }}
         >
-          <Link
+          <div
             style={{
               display: "flex",
               alignItems: "flex-end",
+              cursor: "pointer",
             }}
-            to="/login"
+            onClick = {
+              () =>{
+                navigate("/Students/Home/Class/Section/" + props.Id.toString(), 
+            {
+              state: {
+                class_id: props.ClassId,
+                section_id: props.Id,
+                
+              }
+            })
+              }
+            }
+            
           >
             Ver más
-          </Link>
+          </div>
         </div>
       </Panel>
     </Collapse>
