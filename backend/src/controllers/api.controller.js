@@ -30,7 +30,6 @@ export const UploadHW = async (req, res) => {
         let FileName = req.FileName;
         let IsCompleted = true;
         let Type = true;
-        console.log("enter")
 
         const [rows] = await pool.query("CALL APIUploadHW(?, ?, ?, ?, ?, ?, ?, ?, ?)", [
         User_Id,

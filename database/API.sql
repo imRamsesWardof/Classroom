@@ -15,8 +15,8 @@ $$ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE `APIUploadHW`(
-    IN User_Id VARCHAR(36),
-    IN Class_Id VARCHAR(36),
+    IN User_Id_ VARCHAR(36),
+    IN Class_Id_ VARCHAR(36),
     IN Homework_Id VARCHAR(36),
     IN Section_Id VARCHAR(36),
     IN File_Id VARCHAR(36),
@@ -31,7 +31,7 @@ BEGIN
     INSERT INTO file (Id, Route, FileName, Type, Section_Id)
     VALUES (File_Id, Route, FileName, Type, Section_Id);
         
-    SELECT Id INTO Assignment_Id FROM assignment WHERE User_Id = User_Id AND Class_Id = Class_Id; -- Asignar el resultado de la consulta a la variable
+    SELECT Id INTO Assignment_Id FROM assignment WHERE User_Id = User_Id_ AND Class_Id = Class_Id; -- Asignar el resultado de la consulta a la variable
     
     INSERT INTO homework (Id, IsCompleted, Assignment_Id, File_Id, Section_Id)
     VALUES (Homework_Id, IsCompleted, Assignment_Id, File_Id, Section_Id);
