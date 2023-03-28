@@ -4,6 +4,7 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { validateToken } from '../middlewares/verifytoken.middleware.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -37,7 +38,7 @@ const router = Router();
 router.post('/Student/Class/:Class_Id/Section/:Section_Id', uploadStudent.single('file'), UploadHW);
 router.get('/Student/HW', StudentNotifications);
 router.post('/Class/:Class_Id/Section/:Section_Id/Delete', DeleteSection);
-router.get('/Classes/Get', GetClasses);
+router.get('/Classes/Get',validateToken,  GetClasses);
 
 
 export default router

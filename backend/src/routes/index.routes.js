@@ -13,10 +13,10 @@ import { validateToken } from "../middlewares/verifytoken.middleware.js"
 const router = Router();
 
 router.use(loginRoutes);
-router.use('/Class', validateToken, classRoutes);
-router.use('/Student', validateToken, studentRoutes);
-router.use('/Teacher', validateToken, teacherRoutes);
-router.use('/Role', validateToken, roleRoutes);
+router.use('/Class', classRoutes);
+router.use('/Student', studentRoutes);
+router.use('/Teacher', teacherRoutes);
+router.use('/Role', roleRoutes);
 router.use(validateToken, sectionRoutes);
 router.use(fileRoutes);
 router.use('/API', apiRoutes);

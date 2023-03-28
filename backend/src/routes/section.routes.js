@@ -4,6 +4,7 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { validateToken } from "../middlewares/verifytoken.middleware.js"
 import { v4 as uuidv4 } from 'uuid';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,7 +34,7 @@ const storageTeacher = multer.diskStorage({
 const uploadTeacher = multer({ storage: storageTeacher })
 
 router.get('/API/Class/:Class_Id', GetAllSections)
-router.post('/API/Class/:Class_Id/Section/Post',(req, res, next) => {
+router.post('/API/Class/:Class_Id/Section/Post' ,(req, res, next) => {
   req.Id = uuidv4();
   next();
 }, uploadTeacher.array('files', 5), PostSection)
