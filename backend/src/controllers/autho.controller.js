@@ -6,9 +6,8 @@ dotenv.config()
 
 export const LoginWeb = async (req, res) => {
   const { Password, Username } = req.body;
-
   try {
-    const [rows] = await pool.query("CALL LogIn (?)", [Username]);
+    const [rows] = await pool.query("CALL Login (?)", [Username]);
 
     if (!(rows[0].length <= 0)) {
       const passwordHash = rows[0][0]["Password"];
@@ -16,10 +15,11 @@ export const LoginWeb = async (req, res) => {
 
       if (checkPassword) {
         const { Id, Name, Role } = rows[0][0];
-        const newToken = jwt.sign({ id: Id, name: Name }, process.env.TOKEN_KEY , { expiresIn: "10m" });
+        const newToken = jwt.sign({ id: Id, name: Name, role: Role }, process.env.TOKEN_KEY , { expiresIn: "10m" });
         return res.status(200).json({
           message: "¡Login exitoso!",
           role: Role,
+          name: Name,
           token: newToken,
         });
       }
@@ -30,6 +30,7 @@ export const LoginWeb = async (req, res) => {
     }); 
 
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "Algo salió mal intentando hacer LoginWeb",
       error: error.toString()
@@ -52,10 +53,11 @@ export const LoginMobile = async (req, res) => {
 
         if(Role === 'Admin'){
           const tokenKey = process.env.TOKEN_KEY
-          const newToken = jwt.sign({ id: Id, name: Name }, process.env.TOKEN_KEY, { expiresIn: "10m" });
+          const newToken = jwt.sign({ id: Id, name: Name, role: Role }, process.env.TOKEN_KEY, { expiresIn: "10m" });
           return res.status(200).json({
             message: "¡Login exitoso!",
             role: Role,
+            name: Name, 
             token: newToken,
           });
         }

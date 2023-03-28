@@ -1,5 +1,5 @@
 import { Provider as PaperProvider } from 'react-native-paper';
-import MobileRoutes from './routes/MobileRoutes';
+import MobileRoutes from './Routes/MobileRoutes';
 
 export default function App() {
   return (

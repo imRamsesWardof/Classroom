@@ -9,5 +9,4 @@ router.post('/Post', PostTeacher)
 router.put('/Put/:Id', PutTeacher)
 router.delete('/Delete/:Id', DeleteTeacher)
 
-
 export default router

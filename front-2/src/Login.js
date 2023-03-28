@@ -3,17 +3,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
+import { useSnackbar } from 'notistack'
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Typography from '@mui/material/Typography';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from './App';
 
 function Copyright(props) {
     return (
@@ -29,51 +28,56 @@ function Copyright(props) {
 }
 
 export default function LogIn() {
+    const { setUser } = useContext(UserContext);
+
     const navigate = useNavigate();
-    const location = useLocation();
+
+    const { enqueueSnackbar } = useSnackbar();
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        let accessData = JSON.stringify({
-            "Username": data.get('Username'),
-            "Password": data.get('Password'),
+        var accessData = JSON.stringify({
+            Username: data.get('Username'),
+            Password: data.get('Password'),
         })
 
-        fetch('/LoginWeb', {
+        fetch('http://localhost:4000/LoginWeb', {
             method: 'POST',
             body: accessData,
             headers: { 'Content-Type': 'application/json' }
         })
             .then(response => {
                 if (!response.ok) {
-                    alert("Something went wrong");
+                    enqueueSnackbar('Password or user incorrect', { variant: 'error' })
+                } else {
+                    enqueueSnackbar('Login successful', { variant: 'success' });
+                    navigate('/');
                 }
-                else {
-                    console.log(response);
-                    console.log("OK");
-                    return response.json();
-                }
+                return response.json();
             })
             .then(data => {
                 console.log(data);
-                navigate('/Login');
+                setUser({ role: data.role, token: data.token });
             })
             .catch(error => {
-                alert(error)
+                alert(error);
             });
     };
+
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
             <CssBaseline />
             <Grid item md={12} sx={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Paper sx={{ p: 8, margin: 30, maxWidth: 500, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Paper elevation={6} sx={{ p: 8, margin: 30, maxWidth: 500, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                         <HistoryEduIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Log In
+                        LogIn
+                        {/* Log In, {JSON.stringify(user)} */}
                     </Typography>
 
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, justify: 'center' }}>
@@ -81,10 +85,6 @@ export default function LogIn() {
                             name="Username" autoComplete="email" autoFocus />
                         <TextField margin="normal" required fullWidth name="Password" label="Password"
                             type="Password" id="password" autoComplete="current-password" />
-                        {/* <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        /> */}
                         <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, marginLeft: 'auto' }}>
                             Log In
                         </Button>
