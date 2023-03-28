@@ -9,7 +9,7 @@ import LogOut from '../components/LogOut'
 import { useContext, createContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-
+import { StatisticsRoutes } from './StatisticsRoutes'
 export const AuthContext = createContext(null);
 
 const DrawerContent = (props) => {
@@ -50,7 +50,7 @@ export default function MobileRoutes() {
             </Drawer.Group>)
             :
             (<Drawer.Group>
-              <Drawer.Screen name="Estadisticas" component={Statistics} />
+              <Drawer.Screen name="Estadisticas" component={StatisticsRoutes} />
               
             </Drawer.Group>)
         }
