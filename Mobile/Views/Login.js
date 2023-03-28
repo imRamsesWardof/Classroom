@@ -14,6 +14,7 @@ export default function Login( {navigation} ) {
     useEffect(() => {
         console.log(auth)
     }, [auth])
+    
     const loginAPI = () => {
         const payload = {
             Username: username,
