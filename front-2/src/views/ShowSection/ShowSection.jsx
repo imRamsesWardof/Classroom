@@ -99,7 +99,7 @@ const App = () => {
         console.log(error);
       })
       .finally(()=>{console.log("SECTION DETAILS", section_details)});
-  }, [section_details]);
+  }, []);
   
 
   const [collapsed, setCollapsed] = useState(true);
@@ -159,12 +159,12 @@ const App = () => {
             justifyContent:"space-between",
             alignItems: "flex-start",
           }}>
-              <Title level={3}>{section_details.Section[0].Name + ": " + section_details.Section[0].Title }</Title>
-              <div>{section_details.Section[0].EndDate}</div>
+              <Title level={3}>Prueba</Title>
+              <div>Feahca de termino</div>
             </div>
           
           <Divider />
-          <p>{section_details.Section[0].Description}</p>
+          <p>Description</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores aliquam eius, quasi accusantium quas excepturi harum neque sint sed? Nulla minima atque dolores illum? Quia labore et voluptatibus expedita ullam.</p>
           
           <Divider />

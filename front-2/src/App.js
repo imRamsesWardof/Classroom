@@ -19,6 +19,7 @@ import NavBar from "./NavBar";
 import ProtectedRoutes from "./ProtectedRoutes";
 import StudentClasses from "./views/StudentClass/StudentClass.jsx";
 import ShowSection from "./views/ShowSection/ShowSection.jsx";
+import TeacherClasses from "./views/TeacherClass/TeacherClass.jsx"
 
 export const UserContext = createContext();
 
@@ -93,6 +94,8 @@ export default function App() {
           {/* TEACHER ROUTES*/}
           <Route path="/Teachers" element={<ProtectedRoutes role="Teacher" />}>
             <Route index element={<TeacherHome />}></Route>
+            <Route path="Teacher/Home/Class/:id" element={<StudentClasses/>}></Route>
+            <Route path="Teacher/Home/Class/Section/:id" element={<ShowSection/>}></Route>
           </Route>
 
           {/* STUDENTS ROUTES */}
