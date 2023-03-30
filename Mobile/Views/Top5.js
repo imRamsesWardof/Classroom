@@ -3,6 +3,8 @@ import { VictoryChart, VictoryScatter, VictoryTheme, VictoryAxis, VictoryLabel, 
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Routes/MobileRoutes';
 import { SERVER_IP } from "@env"
+import { Card} from 'react-native-paper';
+
 
 export default function Top5() {
     const { auth } = useContext(AuthContext)
@@ -45,15 +47,15 @@ export default function Top5() {
 
     return (
         <View style={styles.container}>
-            <VictoryChart
+            <Card style={styles.card}>
+                <Card.Title title="5 Estudiantes con más tareas"/>
+                <Card.Content style={styles.card}>
+                <VictoryChart
+                width={350}
                 theme={VictoryTheme.material}
                 domain={{ x: [0, 5], y: [0, 20] }}
             >
-                
-    <VictoryLabel text="5 Estudiantes con más tareas"
-        x={225} y={10}
-        textAnchor="middle"
-    />
+
                 <VictoryScatter
                     
                     style={{ data: { fill: "#c43a31" } }}
@@ -65,9 +67,9 @@ export default function Top5() {
                     minBubbleSize={5}
                     x="StudentName"
                     y="Homeworks_Done"                
-                    labels={({ datum }) => [`${datum.StudentName}`, `Promedio: ${datum.Student_Grade}`]}
+                    labels={({ datum }) => [`${datum.StudentName} (${datum.Homeworks_Done})`, `Promedio: ${datum.Student_Grade}`]}
                     labelComponent={
-                      <VictoryLabel angle={-45} textAnchor="middle"/>
+                      <VictoryLabel angle={-45} textAnchor="middle" size={5}/>
                     }
                     events={[
                         {
@@ -87,9 +89,13 @@ export default function Top5() {
                     tickFormat={(y) => (`${y}`)}
                 />
             </VictoryChart>
+                </Card.Content>
+                <Card.Actions>
+                </Card.Actions>
+            </Card>
+            
         </View>)
 }
-
 
 
 const styles = StyleSheet.create({
@@ -98,7 +104,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '100%',
+        backgroundColor: 'skyblue',
         margin: 'auto'
+    },
+    card: {
+        margin: 'auto',
+        backgroundColor: '#fff',
+        minWidth: '90%',
+        maxWidth: '90%'
+    },
+    cardBody: {
+        
+        justifyContent: 'center',
+        alignItems: 'center',
+        minWidth: '100%',
+        minHeight: '100%',
+        backgroundColor: '#000',
+        margin: 'auto'
+    },
+    textinput: {
+        flex: 1
     },
 });
 

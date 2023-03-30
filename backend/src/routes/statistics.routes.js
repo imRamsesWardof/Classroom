@@ -1,5 +1,5 @@
 import {Router} from "express"
-import {GetTopStudents} from "../controllers/statistics.controller.js"
+import {GetTopStudents, GetTotalUsers} from "../controllers/statistics.controller.js"
 
 const router = Router();
 //Allan
@@ -9,7 +9,7 @@ router.get('/GetTopStudents', GetTopStudents)
 //Ram
 
 //Brandon
-
+router.get('/GetTotalUsers', GetTotalUsers)
 
 
 
