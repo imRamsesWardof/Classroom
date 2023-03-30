@@ -19,12 +19,15 @@ const storageStudent =  multer.diskStorage({
             }
             // var uploadedDir = dirPath;
             req.dirPath = dirPath
+            console.log("Hola")
+            console.log(dirPath)
             cb(null, dirPath);
         },
         filename: (req, file, cb) => {
             var Id =  req.user.id;
             const filename = Id + '-' + `${Buffer.from(file.originalname, 'latin1').toString('utf8',)}`;
             req.FileName = filename;
+            console.log(filename)
             cb(null, filename);
         }
     });

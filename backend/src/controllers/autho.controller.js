@@ -15,7 +15,7 @@ export const LoginWeb = async (req, res) => {
 
       if (checkPassword) {
         const { Id, Name, Role } = rows[0][0];
-        const newToken = jwt.sign({ id: Id, name: Name, role: Role }, process.env.TOKEN_KEY , { expiresIn: "10m" });
+        const newToken = jwt.sign({ id: Id, name: Name, role: Role }, process.env.TOKEN_KEY , { expiresIn: "100m" });
         return res.status(200).json({
           message: "¡Login exitoso!",
           role: Role,
