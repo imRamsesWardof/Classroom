@@ -5,13 +5,17 @@ import { AuthContext } from '../Routes/MobileRoutes';
 import { SERVER_IP } from "@env"
 import { Card} from 'react-native-paper';
 
+//CALENDAR LIBRARY
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+
 
 export default function Histograma() {
+
     //TOKEN
     const { auth } = useContext(AuthContext)
     const [dataChart, setDataChart] = useState([])
     useEffect(() => {
-        const route = ` http://10.0.0.21:4000/Mobile/GetTopStudents`
+        const route = `http://10.0.0.21:4000/Mobile/GetTopStudents`
         console.log(route)
         fetch(route, {
             method: 'GET',
@@ -46,6 +50,9 @@ export default function Histograma() {
         console.log("Point pressed:", props.datum);
       }
 
+      const [stardate, setStartdate] = useState(null)
+       const [enddate, setEnddate] = useState(null)
+
     return (
         <View style={styles.container}>
             <Card style={styles.card}>
@@ -53,7 +60,7 @@ export default function Histograma() {
                 <Card.Content style={styles.card}>
                 
                {/*  {<Image style={{width: "100%", }} source={require('../assets/miedo.jpg')} />} */}
-                <VictoryChart width={400} height={400}>
+                {/* <VictoryChart width={400} height={400}>
         <VictoryGroup
           style={{
             data: { strokeWidth: 3, fillOpacity: 0.4 }
@@ -89,8 +96,39 @@ export default function Histograma() {
         <View>
             <View style={{backgroundColor: "cyan", width:20, height:10}}></View>
             <Text>Español</Text>
-        </View>
+        </View> */}
 
+{/*         SELECTOR DE FECHAS COMPONENTE
+ */
+ 
+ }
+
+<Calendar
+onDayPress={day => {
+  if(stardate === null){
+    setStartdate({ [day.dateString] : {
+      selected: true, startingDay: true, color: 'green', textColor: 'white'
+    }})
+    return 0;
+  }
+  if( enddate ==null){
+    setEnddate({ [day.dateString] : {
+      selected: true, endingDay: true, color: 'green', textColor: 'white'
+    }})
+    return 0;
+  }
+  
+  console.log('selected day', day);
+  console.log('startDate', stardate);
+  console.log('endDate', enddate);
+}}
+markingType={'period'}
+markedDates={{
+  stardate,
+  enddate
+
+}}
+></Calendar>
 
                 </Card.Content>
                 <Card.Actions>
