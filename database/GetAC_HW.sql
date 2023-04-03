@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAC_HW`()
+CREATE PROCEDURE `GetAC_HW`()
 BEGIN
 SELECT QAssigned.Title, QCompleted.Completed, QAssigned.Assigned FROM
 (SELECT a.Class_Id, COUNT(DISTINCT h.Id) Completed
