@@ -1,16 +1,17 @@
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { VictoryChart, VictoryScatter, VictoryTheme, VictoryAxis, VictoryLabel, VictoryLegend } from 'victory-native';
+import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
+import { VictoryChart, VictoryGroup, VictoryArea } from 'victory-native';
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Routes/MobileRoutes';
 import { SERVER_IP } from "@env"
 import { Card} from 'react-native-paper';
 
 
-export default function Top5() {
+export default function Histograma() {
+    //TOKEN
     const { auth } = useContext(AuthContext)
     const [dataChart, setDataChart] = useState([])
     useEffect(() => {
-        const route = `http://10.0.0.21:4000/Mobile/GetTopStudents`
+        const route = ` http://10.0.0.21:4000/Mobile/GetTopStudents`
         console.log(route)
         fetch(route, {
             method: 'GET',
@@ -33,7 +34,7 @@ export default function Top5() {
                   })))
             })
             .catch(error => {
-                alert(error);
+               
             });
     }, [])
 
@@ -48,47 +49,49 @@ export default function Top5() {
     return (
         <View style={styles.container}>
             <Card style={styles.card}>
-                <Card.Title title="5 Estudiantes con más tareas"/>
+                <Card.Title title="Top 5 Clases con más tareas"/>
                 <Card.Content style={styles.card}>
-                <VictoryChart
-                width={350}
-                theme={VictoryTheme.material}
-                domain={{ x: [0, 5], y: [0, 20] }}
-            >
+                
+               {/*  {<Image style={{width: "100%", }} source={require('../assets/miedo.jpg')} />} */}
+                <VictoryChart width={400} height={400}>
+        <VictoryGroup
+          style={{
+            data: { strokeWidth: 3, fillOpacity: 0.4 }
+          }}
+        >
+          <VictoryArea
+            style={{
+              data: { fill: "cyan", stroke: "cyan" }
+            }}
+            data={[
+              { x: "Enero", y: 1 },
+              { x: "Febrero", y: 2 },
+              { x: "Marzo", y: 4 },
+              { x: "Abril", y: 4 },
+              { x: "Mayo", y: 7 }
+            ]}
+          />
+          <VictoryArea
+            style={{
+              data: { fill: "magenta", stroke: "magenta" }
+            }}
+            data={[
+                { x: "Enero", y: 1 },
+                { x: "Febrero", y: 0 },
+                { x: "Marzo", y: 5 },
+                { x: "Abril", y: 1 },
+                { x: "Mayo", y: 2}
+            ]}
+          />
+        </VictoryGroup>
+      </VictoryChart>
 
-                <VictoryScatter
-                    
-                    style={{ data: { fill: "#c43a31" } }}
-                    size={8}
-                    
-                    data={dataChart}
-                    bubbleProperty="Student_Grade"
-                    maxBubbleSize={10}
-                    minBubbleSize={5}
-                    x="StudentName"
-                    y="Homeworks_Done"                
-                    labels={({ datum }) => [`${datum.StudentName} (${datum.Homeworks_Done})`, `Promedio: ${datum.Student_Grade}`]}
-                    labelComponent={
-                      <VictoryLabel angle={-45} textAnchor="middle" size={5}/>
-                    }
-                    events={[
-                        {
-                          target: "data",
-                          eventHandlers: {
-                            onPress: handlePointPress,
-                          },
-                        },
-                      ]}
-                />
-                <VictoryAxis
-                    tickValues={[1, 2, 3, 4, 5]}
-                    tickFormat={["1o", "2o", "3o", "4o", "5o"]}
-                />
-                <VictoryAxis
-                    dependentAxis
-                    tickFormat={(y) => (`${y}`)}
-                />
-            </VictoryChart>
+        <View>
+            <View style={{backgroundColor: "cyan", width:20, height:10}}></View>
+            <Text>Español</Text>
+        </View>
+
+
                 </Card.Content>
                 <Card.Actions>
                 </Card.Actions>

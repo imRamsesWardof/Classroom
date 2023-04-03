@@ -9,7 +9,7 @@ export default function TotalUsers() {
     const { auth } = useContext(AuthContext)
     const [dataChartUsers, setDataChartUsers] = useState([])
     useEffect(() => {
-        const route = `${SERVER_IP}/Mobile/GetTotalUsers`
+        const route = ` http://10.0.0.21:4000/Mobile/GetTotalUsers`
         console.log(route)
         fetch(route, {
             method: 'GET',
@@ -19,6 +19,7 @@ export default function TotalUsers() {
             }
         })
             .then(response => {
+                console.log(response)
                 const data = response.json()
                 if (!response.ok) {
                     return Promise.reject(`${response.status} ${response.statusText}`);
@@ -32,6 +33,7 @@ export default function TotalUsers() {
                 })))
             })
             .catch(error => {
+                console.log(error)
                 alert(error);
             });
     }, [])
