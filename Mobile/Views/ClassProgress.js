@@ -1,16 +1,17 @@
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
-import { VictoryChart, VictoryLabel, VictoryStack, VictoryBar, VictoryAxis, VictoryTooltip } from 'victory-native';
+import { VictoryChart, VictoryLabel, VictoryStack, VictoryLine, VictoryAxis, VictoryTooltip } from 'victory-native';
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Routes/MobileRoutes';
-import { SERVER_IP } from "@env"
+import { SERVER_IP } from "@env";
+import { timeFormat } from 'd3-time-format';
+const formatDate = timeFormat('%e %B'); // Define el formato de fecha
 
-export default function AC_HW() {
+export default function ClassProgress() {
     const { auth } = useContext(AuthContext)
-    const [Completed, setCompleted] = useState([])
-    const [Assigned, setAssigned] = useState([])
+    const [Class, setClassProgress] = useState([])
     useEffect(() => {
-        const route = `${SERVER_IP}/Mobile/GetAssignedCompletedHW`
+        const route = `${SERVER_IP}/Mobile/GetClassProgress`
         fetch(route, {
             method: 'GET',
             headers: {
@@ -26,65 +27,59 @@ export default function AC_HW() {
                 return data;
             })
             .then((data) => {
-                
-                setCompleted(data.map(item => ({
-                    x: item.Title,
-                    y: item.Completed,
-                    label: ["Completed", item.Completed]
-                })))
-
-                setAssigned(data.map(item => ({
-                    x: item.Title,
-                    y: item.Assigned - item.Completed,
-                    label: ["Assigned", item.Assigned]
-                })))
+                setClassProgress(data.map((item, index) => ([
+                    {
+                        x: Number(item.Startdate),
+                        y: item.Title,
+                        label: ["S", item.Startdate]
+                    },
+                    {
+                        x: Number(item.Enddate),
+                        y: item.Title,
+                        label: ["E", item.Enddate]
+                    }]
+                )))
             })
             .catch(error => {
                 alert(error);
             });
     }, [])
 
-    // useEffect(() => {
-    //     console.log(Completed);
-    //     console.log(Assigned);
-    // }, [Completed])
+    useEffect(() => {
+        console.log(Class);
+    }, [Class])
 
     return (
         <View style={styles.container}>
             <Card style={styles.card}>
-                <Card.Title title="Tareas Asignadas y Completadas" />
+                <Card.Title title="Progreso en las clases (Mes Actual)" />
                 <Card.Content style={styles.card}>
                     <VictoryChart width={350}
-                        domain={{ x: [0, 3], y: [0, 50] }}>
-                        <VictoryLabel 
+                        domain={{ x: [0, 30], y: [0,5] }}>
+                        <VictoryLabel
                             x={225} y={10}
                             textAnchor="middle"
                         />
                         <VictoryAxis
-                            dependentAxis
-                            tickFormat={(x) => (x)} label="Número de tareas"
                         />
-                        <VictoryAxis
-                            tickValues={[1, 2, 3, 4]} label="Clases"
+                        <VictoryAxis dependentAxis
                         />
-                        <VictoryStack
-                            colorScale={"warm"} domainPadding={{ x: 0 }}
-                            
-                        >
-                            
-                            <VictoryBar 
-                                data={Assigned} labelComponent={<VictoryLabel dy={0}/>}
+                        {Class.map((element) => (
+                            <VictoryLine
+                                style={{
+                                    data: { stroke: "#c43a31" },
+                                    parent: { border: "4px solid #ccc" }
+                                }}
+                                data={element}
                             />
-                            <VictoryBar  labelComponent={<VictoryTooltip/>}
-                                data={Completed}
-                            />
-                        </VictoryStack>
+                        ))}
                     </VictoryChart>
                 </Card.Content>
                 <Card.Actions>
                 </Card.Actions>
             </Card>
-        </View>)
+        </View>
+    )
 }
 
 
