@@ -1,5 +1,5 @@
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { VictoryChart, VictoryScatter, VictoryTheme, VictoryAxis, VictoryLabel, VictoryLegend } from 'victory-native';
+import { VictoryChart, VictoryScatter, VictoryVoronoiContainer, VictoryAxis, VictoryTooltip, VictoryLegend } from 'victory-native';
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Routes/MobileRoutes';
 import { SERVER_IP } from "@env"
@@ -9,6 +9,8 @@ import { Card} from 'react-native-paper';
 export default function Top5() {
     const { auth } = useContext(AuthContext)
     const [dataChart, setDataChart] = useState([])
+    const [maxRange, setMaxRange] = useState(0)
+    
     useEffect(() => {
         const route = `${SERVER_IP}/Mobile/GetTopStudents`
         console.log(route)
@@ -38,7 +40,7 @@ export default function Top5() {
     }, [])
 
     useEffect(() => {
-        console.log(dataChart)
+        setMaxRange(Math.max(...dataChart.map((datum) => datum.Homeworks_Done)))
     }, [dataChart])
 
     const handlePointPress = (event, props) => {
@@ -52,8 +54,8 @@ export default function Top5() {
                 <Card.Content style={styles.card}>
                 <VictoryChart
                 width={350}
-                theme={VictoryTheme.material}
-                domain={{ x: [0, 5], y: [0, 20] }}
+                domain={{ x: [0, 5], y: [0, maxRange+6] }}
+                containerComponent={<VictoryVoronoiContainer />}
             >
 
                 <VictoryScatter
@@ -63,22 +65,14 @@ export default function Top5() {
                     
                     data={dataChart}
                     bubbleProperty="Student_Grade"
-                    maxBubbleSize={10}
-                    minBubbleSize={5}
+                    maxBubbleSize={30}
+                    minBubbleSize={10}
                     x="StudentName"
                     y="Homeworks_Done"                
-                    labels={({ datum }) => [`${datum.StudentName} (${datum.Homeworks_Done})`, `Promedio: ${datum.Student_Grade}`]}
-                    labelComponent={
-                      <VictoryLabel angle={-45} textAnchor="middle" size={5}/>
+                    labels={({ datum }) => [`Nombre: ${datum.StudentName}`,`Tareas: ${datum.Homeworks_Done}`, `Promedio: ${datum.Student_Grade}`]}
+                    labelComponent={<VictoryTooltip  dy={-30} constrainToVisibleArea/>
                     }
-                    events={[
-                        {
-                          target: "data",
-                          eventHandlers: {
-                            onPress: handlePointPress,
-                          },
-                        },
-                      ]}
+                    
                 />
                 <VictoryAxis
                     tickValues={[1, 2, 3, 4, 5]}
