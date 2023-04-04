@@ -3,8 +3,8 @@ import { pool } from "../classroom.db.js";
 //Allan
 export const GetTopStudents = async (req, res) => {
     try {
-            const [students] = await pool.query("CALL Top5Students");
-            res.send(students[0]);
+        const [students] = await pool.query("CALL Top5Students");
+        res.send(students[0]);
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -13,34 +13,31 @@ export const GetTopStudents = async (req, res) => {
     }
 }
 
-
-
-
-
-
-
 //Fer
+export const GetAC_HW = async (req, res) => {
+    try {
+        const [classes] = await pool.query("CALL GetAC_HW");
+        res.send(classes[0]);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            message: "Something goes wrong trying to GetAC_HW",
+        });
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const GetClassProgress = async (req, res) => {
+    try {
+        const [classes] = await pool.query("CALL GetClassProgress");
+        console.log(classes[0]);
+        res.send(classes[0]);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            message: "Something goes wrong trying to GetClassProgress",
+        });
+    }
+}
 
 //Ramses
 
@@ -69,8 +66,8 @@ export const GetTopStudents = async (req, res) => {
 
 export const GetTotalUsers = async (req, res) => {
     try {
-            const [roles] = await pool.query("CALL GetTotalUser");
-            res.send(roles[0]);
+        const [roles] = await pool.query("CALL GetTotalUser");
+        res.send(roles[0]);
     } catch (error) {
         console.log(error)
         return res.status(500).json({
