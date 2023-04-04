@@ -5,7 +5,9 @@ module.exports = function(api) {
     "plugins": [
       ["react-native-reanimated/plugin", {
       "relativeSourceLocation": true
-    }]
+    }],
+    ["module:react-native-dotenv"]
     ],
+    
   };
 };

@@ -1,9 +1,7 @@
 import * as React from "react";
-import { NativeRouter, Routes, Route, Outlet } from "react-router-native";
-import { StyleSheet, View, Text, Icon } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Login from '../Views/Login'
 import NoAuthorized from '../Views/NoAuthorized'
-import Statistics from '../Views/Statistics'
 import Home from '../Views/Home'
 import LogOut from '../components/LogOut'
 import { useContext, createContext, useState } from 'react';
