@@ -3,6 +3,7 @@ import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } 
 import { Button, TextInput, Card } from 'react-native-paper';
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../Routes/MobileRoutes'
+import { SERVER_IP } from "@env"
 
 export default function Login( {navigation} ) {
     const { auth, setAuth } = useContext(AuthContext)
@@ -13,13 +14,17 @@ export default function Login( {navigation} ) {
 
     useEffect(() => {
         console.log(auth)
+        console.log(SERVER_IP)
     }, [auth])
+    
     const loginAPI = () => {
         const payload = {
             Username: username,
             Password: password
         };
-        fetch('http://192.168.0.177:4000/LoginMobile', {
+        const route = `http://192.168.118.138:4000/LoginMobile`
+        console.log(route)
+        fetch(route, {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
@@ -28,6 +33,7 @@ export default function Login( {navigation} ) {
             }
         })  
         .then(response => {
+            console.log(response)
             if (!response.ok) {
               return response.json()
                 .then(error => Promise.reject(`${response.status} ${response.statusText}: ${error.message}`));
@@ -39,6 +45,7 @@ export default function Login( {navigation} ) {
             navigation.navigate('Estadisticas')
         })
           .catch(error => {
+            console.log(error)
             alert(error);
           });
     }

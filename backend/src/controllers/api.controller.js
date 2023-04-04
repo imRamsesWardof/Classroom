@@ -30,19 +30,18 @@ export const UploadHW = async (req, res) => {
         let FileName = req.FileName;
         let IsCompleted = true;
         let Type = true;
-        console.log("enter")
-        console.log(Route + "/" + FileName)
 
-        const [rows] = await pool.query("CALL APIUploadHW(?, ?, ?, ?, ?, ?, ?, ?)", [
-         User_Id,
-         Homework_Id,
-         Section_Id,
-         File_Id,
-         Route,
-         FileName,
-         IsCompleted,
-         Type
-         ]);
+        const [rows] = await pool.query("CALL APIUploadHW(?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+        User_Id,
+        Class_Id,
+        Homework_Id,
+        Section_Id,
+        File_Id,
+        Route,
+        FileName,
+        IsCompleted,
+        Type
+        ]);
     } catch (error) {
         console.log(error)
         return res.status(500).json({

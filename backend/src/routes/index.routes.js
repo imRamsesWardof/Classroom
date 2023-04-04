@@ -8,6 +8,7 @@ import loginRoutes from "./autho.routes.js";
 import sectionRoutes from "./section.routes.js";
 import fileRoutes from "./file.routes.js";
 import apiRoutes from "./api.routes.js";
+import statisticsRoutes from "./statistics.routes.js";
 import { validateToken } from "../middlewares/verifytoken.middleware.js"
 
 const router = Router();
@@ -19,7 +20,8 @@ router.use('/Teacher', teacherRoutes);
 router.use('/Role', roleRoutes);
 router.use(validateToken, sectionRoutes);
 router.use(fileRoutes);
-router.use('/API', apiRoutes);
+router.use('/API', validateToken, apiRoutes);
+router.use('/Mobile', validateToken, statisticsRoutes);
 router.get('/ping', ping);
 
 export default router
