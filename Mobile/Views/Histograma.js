@@ -23,7 +23,7 @@ export default function Histograma() {
 
   useEffect(() => {
     const route = `http://192.168.118.138:4000/Mobile/GetHistogrma`;
-    console.log('HISTOGRAMA', route);
+    /* console.log('HISTOGRAMA', route); */
     fetch(route, {
       method: "GET",
       headers: {
@@ -40,7 +40,7 @@ export default function Histograma() {
       })
       .then((data) => {
         const color = ["cyan", "red", "yellow", "green", "orange"]
-        console.log('DATOS', data);
+       /*  console.log('DATOS', data); */
         const newArray = data.tops.map((tops, i) =>{
           return { name: tops.Title, symbol: { fill: color[i] } }
         })
@@ -53,16 +53,13 @@ export default function Histograma() {
           }))
         ); */
       }).then(() => {})
-      .catch((error) => {});
+      .catch((error) => {alert(error)});
   }, []);
 
   useEffect(() => {
-    console.log("TOP1-----------------", datos.top1);
+   /*  console.log("TOP1-----------------", datos.top1); */
   }, [datos]);
 
-  const handlePointPress = (event, props) => {
-    console.log("Point pressed:", props.datum);
-  };
 
   const [startdate, setStartdate] = useState(null);
   const [enddate, setEnddate] = useState(null);
@@ -74,6 +71,7 @@ export default function Histograma() {
       setEnddate(day.dateString);
     } else if (enddate !== null) {
       setStartdate(day.dateString);
+
       setEnddate(null);
     }
   };
