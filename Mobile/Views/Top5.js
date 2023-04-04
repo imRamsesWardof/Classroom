@@ -10,7 +10,7 @@ export default function Top5() {
     const { auth } = useContext(AuthContext)
     const [dataChart, setDataChart] = useState([])
     useEffect(() => {
-        const route = `http://10.0.0.21:4000/Mobile/GetTopStudents`
+        const route = `http://192.168.118.138:4000/Mobile/GetTopStudents`
         console.log(route)
         fetch(route, {
             method: 'GET',

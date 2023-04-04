@@ -9,7 +9,7 @@ export default function TotalUsers() {
     const { auth } = useContext(AuthContext)
     const [dataChartUsers, setDataChartUsers] = useState([])
     useEffect(() => {
-        const route = ` http://10.0.0.21:4000/Mobile/GetTotalUsers`
+        const route = ` http://192.168.0.101:/Mobile/GetTotalUsers`
         console.log(route)
         fetch(route, {
             method: 'GET',
