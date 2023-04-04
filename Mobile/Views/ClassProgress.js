@@ -4,8 +4,6 @@ import { VictoryChart, VictoryLabel, VictoryStack, VictoryLine, VictoryAxis, Vic
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Routes/MobileRoutes';
 import { SERVER_IP } from "@env";
-import { timeFormat } from 'd3-time-format';
-const formatDate = timeFormat('%e %B'); // Define el formato de fecha
 
 export default function ClassProgress() {
     const { auth } = useContext(AuthContext)
