@@ -64,10 +64,7 @@ export default function ClassProgress() {
                         />
                         {Class.map((element) => (
                             <VictoryLine
-                                style={{
-                                    data: { stroke: "#c43a31" },
-                                    parent: { border: "10px solid #ccc" }
-                                }}
+                            style={{ data: { stroke: "#c43a31", strokeWidth: 8, strokeLinecap: "round" } }}
                                 data={element}
                             />
                         ))}
