@@ -12,7 +12,7 @@ export default function Top5() {
     const [maxRange, setMaxRange] = useState(0)
     
     useEffect(() => {
-        const route = `http://192.168.118.138:4000/Mobile/GetTopStudents`
+        const route = `${SERVER_IP}/Mobile/GetTopStudents`
         console.log(route)
         fetch(route, {
             method: 'GET',

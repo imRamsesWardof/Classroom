@@ -22,7 +22,7 @@ export default function Histograma() {
   });
 
   useEffect(() => {
-    const route = `http://192.168.118.138:4000/Mobile/GetHistogrma`;
+    const route = `${SERVER_IP}/Mobile/GetHistogrma`;
     /* console.log('HISTOGRAMA', route); */
     fetch(route, {
       method: "GET",
@@ -82,8 +82,8 @@ export default function Histograma() {
         <Card.Title title="Top 3 Clases con más tareas en 2023" />
         <Card.Content style={styles.card}>
           {/*  {<Image style={{width: "100%", }} source={require('../assets/miedo.jpg')} />} */}
-          <VictoryChart width={400} height={400}>
-          <VictoryLegend x={280} y={0}
+          <VictoryChart width={350} height={300}>
+          <VictoryLegend x={170} y={0} 
               gutter={50}
               style={{title: {fontSize: 20 } }}
               data={datos.array}
@@ -127,7 +127,7 @@ export default function Histograma() {
             data={datos.top5}
           /> */}
         </VictoryGroup>
-        <VictoryAxis  crossAxis tickLabelComponent={<VictoryLabel angle={-45} y={370} />} />
+        <VictoryAxis  crossAxis tickLabelComponent={<VictoryLabel angle={-45} y={270} />} />
         <VictoryAxis dependentAxis crossAxis tickLabelComponent={<VictoryLabel angle={0} />} />
       </VictoryChart>
 
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     minWidth: "90%",
     maxWidth: "90%",
+    overflow: "hidden",
   },
   cardBody: {
     justifyContent: "center",

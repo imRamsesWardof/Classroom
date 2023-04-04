@@ -22,7 +22,7 @@ export default function Login( {navigation} ) {
             Username: username,
             Password: password
         };
-        const route = `http://192.168.118.138:4000/LoginMobile`
+        const route = `${SERVER_IP}/LoginMobile`
         console.log(route)
         fetch(route, {
             method: 'POST',
