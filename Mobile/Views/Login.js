@@ -22,7 +22,7 @@ export default function Login( {navigation} ) {
             Username: username,
             Password: password
         };
-        const route = `${SERVER_IP}/LoginMobile`
+        const route = `http://192.168.118.138:4000/LoginMobile`
         console.log(route)
         fetch(route, {
             method: 'POST',
@@ -33,6 +33,7 @@ export default function Login( {navigation} ) {
             }
         })  
         .then(response => {
+            console.log(response)
             if (!response.ok) {
               return response.json()
                 .then(error => Promise.reject(`${response.status} ${response.statusText}: ${error.message}`));
@@ -44,6 +45,7 @@ export default function Login( {navigation} ) {
             navigation.navigate('Estadisticas')
         })
           .catch(error => {
+            console.log(error)
             alert(error);
           });
     }
