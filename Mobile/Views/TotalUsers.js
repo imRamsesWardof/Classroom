@@ -26,19 +26,13 @@ export default function TotalUsers() {
                 return data;
             })
             .then((data) => {
-                setDataChartUsers(data.map(item => ({
-                    ...item,
-                    Student_Grade: parseFloat(item.Student_Grade)
-                })))
+                setDataChartUsers(data)
             })
             .catch(error => {
                 alert(error);
             });
     }, [])
 
-    useEffect(() => {
-        console.log(dataChartUsers)
-    }, [dataChartUsers])
 
     return (
         <View style={styles.container}>

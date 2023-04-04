@@ -9,6 +9,8 @@ import { Card} from 'react-native-paper';
 export default function Top5() {
     const { auth } = useContext(AuthContext)
     const [dataChart, setDataChart] = useState([])
+    const [maxRange, setMaxRange] = useState(0)
+    
     useEffect(() => {
         const route = `${SERVER_IP}/Mobile/GetTopStudents`
         console.log(route)
@@ -38,7 +40,7 @@ export default function Top5() {
     }, [])
 
     useEffect(() => {
-        console.log(dataChart)
+        setMaxRange(Math.max(...dataChart.map((datum) => datum.Homeworks_Done)))
     }, [dataChart])
 
     const handlePointPress = (event, props) => {
@@ -53,7 +55,7 @@ export default function Top5() {
                 <VictoryChart
                 width={350}
                 theme={VictoryTheme.material}
-                domain={{ x: [0, 5], y: [0, 20] }}
+                domain={{ x: [0, 5], y: [0, maxRange+6] }}
             >
 
                 <VictoryScatter
