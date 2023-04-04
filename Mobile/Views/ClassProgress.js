@@ -4,8 +4,6 @@ import { VictoryChart, VictoryLabel, VictoryStack, VictoryLine, VictoryAxis, Vic
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Routes/MobileRoutes';
 import { SERVER_IP } from "@env";
-import { timeFormat } from 'd3-time-format';
-const formatDate = timeFormat('%e %B'); // Define el formato de fecha
 
 export default function ClassProgress() {
     const { auth } = useContext(AuthContext)
@@ -54,21 +52,21 @@ export default function ClassProgress() {
             <Card style={styles.card}>
                 <Card.Title title="Progreso en las clases (Mes Actual)" />
                 <Card.Content style={styles.card}>
-                    <VictoryChart width={350}
+                    <VictoryChart width={325}
                         domain={{ x: [0, 30], y: [0,5] }}>
                         <VictoryLabel
                             x={225} y={10}
                             textAnchor="middle"
                         />
-                        <VictoryAxis
+                        <VictoryAxis 
                         />
-                        <VictoryAxis dependentAxis
+                        <VictoryAxis dependentAxis tickLabelComponent={<VictoryLabel angle={-45} textAnchor="end" size={5}/>}
                         />
                         {Class.map((element) => (
                             <VictoryLine
                                 style={{
                                     data: { stroke: "#c43a31" },
-                                    parent: { border: "4px solid #ccc" }
+                                    parent: { border: "10px solid #ccc" }
                                 }}
                                 data={element}
                             />

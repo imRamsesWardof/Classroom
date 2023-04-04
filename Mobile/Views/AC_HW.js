@@ -54,24 +54,22 @@ export default function AC_HW() {
             <Card style={styles.card}>
                 <Card.Title title="Tareas Asignadas y Completadas" />
                 <Card.Content style={styles.card}>
-                    <VictoryChart width={350}
+                    <VictoryChart width={325}
                         domain={{ x: [0, 3], y: [0, 50] }}>
                         <VictoryLabel 
                             x={225} y={10}
                             textAnchor="middle"
                         />
                         <VictoryAxis
-                            dependentAxis
-                            tickFormat={(x) => (x)} label="Número de tareas"
+                            dependentAxis orientation="left"
+                            tickFormat={(x) => (x)} label="NÚMERO DE TAREAS" PADDING={0}
                         />
-                        <VictoryAxis
-                            tickValues={[1, 2, 3, 4]} label="Clases"
+                        <VictoryAxis 
+                            tickValues={[1, 2, 3, 4]} label="CLASES"
                         />
                         <VictoryStack
-                            colorScale={"warm"} domainPadding={{ x: 0 }}
-                            
+                            colorScale={"warm"} domainPadding={{ x: 0 }}   
                         >
-                            
                             <VictoryBar 
                                 data={Assigned} labelComponent={<VictoryLabel dy={0}/>}
                             />
