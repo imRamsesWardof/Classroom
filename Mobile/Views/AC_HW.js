@@ -9,6 +9,7 @@ export default function AC_HW() {
     const { auth } = useContext(AuthContext)
     const [Completed, setCompleted] = useState([])
     const [Assigned, setAssigned] = useState([])
+    const [maxRange, setMaxRange] = useState(0)
     useEffect(() => {
         const route = `${SERVER_IP}/Mobile/GetAssignedCompletedHW`
         fetch(route, {
@@ -44,10 +45,9 @@ export default function AC_HW() {
             });
     }, [])
 
-    // useEffect(() => {
-    //     console.log(Completed);
-    //     console.log(Assigned);
-    // }, [Completed])
+    useEffect(() => {
+        setMaxRange(Math.max(...Assigned.map((datum) => datum.y)))
+    }, [Assigned])
 
     return (
         <View style={styles.container}>
@@ -55,7 +55,7 @@ export default function AC_HW() {
                 <Card.Title title="Tareas Asignadas y Completadas" />
                 <Card.Content style={styles.card}>
                     <VictoryChart width={325}
-                        domain={{ x: [0, 3], y: [0, 50] }}>
+                        domain={{ x: [0, 3], y: [0, maxRange+6] }}>
                         <VictoryLabel 
                             x={225} y={10}
                             textAnchor="middle"
