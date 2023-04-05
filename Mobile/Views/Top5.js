@@ -70,7 +70,7 @@ export default function Top5() {
                     x="StudentName"
                     y="Homeworks_Done"                
                     labels={({ datum }) => [`Nombre: ${datum.StudentName}`,`Tareas: ${datum.Homeworks_Done}`, `Promedio: ${datum.Student_Grade}`]}
-                    labelComponent={<VictoryTooltip  dy={-30} constrainToVisibleArea/>
+                    labelComponent={<VictoryTooltip  dy={-30} constrainToVisibleArea renderInPortal={false}/>
                     }
                     
                 />

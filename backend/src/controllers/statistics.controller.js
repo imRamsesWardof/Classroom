@@ -77,7 +77,7 @@ export const GetAC_HW = async (req, res) => {
 export const GetClassProgress = async (req, res) => {
     try {
         const [classes] = await pool.query("CALL GetClassProgress");
-        console.log(classes[0]);
+      /*   console.log(classes[0]); */
         res.send(classes[0]);
     } catch (error) {
         console.log(error)

@@ -1,7 +1,7 @@
 import { StyleSheet, View, TouchableOpacity, Image, Text } from "react-native";
 import { VictoryChart, VictoryGroup, VictoryArea, VictoryLegend, VictoryLabel, VictoryAxis} from "victory-native";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../Routes/MobileRoutes";
+import { AuthContext } from "../Routes/MobileRoutes.js";
 import { SERVER_IP } from "@env";
 import { Card } from "react-native-paper";
 
@@ -23,7 +23,7 @@ export default function Histograma() {
 
   useEffect(() => {
     const route = `${SERVER_IP}/Mobile/GetHistogrma`;
-    /* console.log('HISTOGRAMA', route); */
+    console.log(route);
     fetch(route, {
       method: "GET",
       headers: {
@@ -45,15 +45,10 @@ export default function Histograma() {
           return { name: tops.Title, symbol: { fill: color[i] } }
         })
         setDatos({ array: newArray ,top1: data.top1, top2: data.top2, top3: data.top3, top4: data.top4, top5: data.top5 });
-
-        /* setDataChart(
-          data.map((item) => ({
-            ...item,
-            Student_Grade: parseFloat(item.Student_Grade),
-          }))
-        ); */
       }).then(() => {})
-      .catch((error) => {alert(error)});
+      .catch(error => {
+        alert(error);
+    });
   }, []);
 
   useEffect(() => {
@@ -71,7 +66,6 @@ export default function Histograma() {
       setEnddate(day.dateString);
     } else if (enddate !== null) {
       setStartdate(day.dateString);
-
       setEnddate(null);
     }
   };
@@ -81,7 +75,6 @@ export default function Histograma() {
       <Card style={styles.card}>
         <Card.Title title="Top 3 Clases con más tareas en 2023" />
         <Card.Content style={styles.card}>
-          {/*  {<Image style={{width: "100%", }} source={require('../assets/miedo.jpg')} />} */}
           <VictoryChart width={350} height={300}>
           <VictoryLegend x={170} y={0} 
               gutter={50}
@@ -179,7 +172,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     minWidth: "90%",
     maxWidth: "90%",
-    overflow: "hidden",
   },
   cardBody: {
     justifyContent: "center",

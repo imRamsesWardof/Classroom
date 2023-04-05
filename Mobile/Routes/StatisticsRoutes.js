@@ -1,11 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Icon } from 'react-native';
-import Statistics from '../Views/Statistics'
-import Top5 from '../Views/Top5'
-import AC_HW from '../Views/AC_HW'
-import ClassProgress from '../Views/ClassProgress'
-import TotalUsers from '../Views/TotalUsers'
-import Histograma from "../Views/Histograma";
+import Statistics from '../Views/Statistics.js'
+import Top5 from '../Views/Top5.js'
+import AC_HW from '../Views/AC_HW.js'
+import ClassProgress from '../Views/ClassProgress.js'
+import TotalUsers from '../Views/TotalUsers.js'
+import Histograma from "../Views/Histograma.js";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();

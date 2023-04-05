@@ -73,7 +73,7 @@ export default function AC_HW() {
                             <VictoryBar 
                                 data={Assigned} labelComponent={<VictoryLabel dy={0}/>}
                             />
-                            <VictoryBar  labelComponent={<VictoryTooltip/>}
+                            <VictoryBar  labelComponent={<VictoryTooltip renderInPortal={false}/>}
                                 data={Completed}
                             />
                         </VictoryStack>

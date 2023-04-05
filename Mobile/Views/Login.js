@@ -13,8 +13,8 @@ export default function Login( {navigation} ) {
     const [disableLogin, setDisableLogin] = useState(true)
 
     useEffect(() => {
-        console.log(auth)
-        console.log(SERVER_IP)
+/*         console.log(auth)
+        console.log(SERVER_IP) */
     }, [auth])
     
     const loginAPI = () => {
@@ -33,7 +33,7 @@ export default function Login( {navigation} ) {
             }
         })  
         .then(response => {
-            console.log(response)
+            /* console.log(response) */
             if (!response.ok) {
               return response.json()
                 .then(error => Promise.reject(`${response.status} ${response.statusText}: ${error.message}`));
@@ -45,7 +45,6 @@ export default function Login( {navigation} ) {
             navigation.navigate('Estadisticas')
         })
           .catch(error => {
-            console.log(error)
             alert(error);
           });
     }

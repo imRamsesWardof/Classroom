@@ -10,6 +10,7 @@ export default function ClassProgress() {
     const [Class, setClassProgress] = useState([])
     useEffect(() => {
         const route = `${SERVER_IP}/Mobile/GetClassProgress`
+        console.log(route)
         fetch(route, {
             method: 'GET',
             headers: {
@@ -44,7 +45,7 @@ export default function ClassProgress() {
     }, [])
 
     useEffect(() => {
-        console.log(Class);
+        /* console.log(Class); */
     }, [Class])
 
     return (
@@ -62,8 +63,9 @@ export default function ClassProgress() {
                         />
                         <VictoryAxis dependentAxis tickLabelComponent={<VictoryLabel angle={-45} textAnchor="end" size={5}/>}
                         />
-                        {Class.map((element) => (
+                        {Class.map((element, i) => (
                             <VictoryLine
+                            key={i}
                             style={{ data: { stroke: "#c43a31", strokeWidth: 8, strokeLinecap: "round" } }}
                                 data={element}
                             />

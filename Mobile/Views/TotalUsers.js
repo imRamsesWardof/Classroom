@@ -19,7 +19,7 @@ export default function TotalUsers() {
             }
         })
             .then(response => {
-                console.log(response)
+                /* console.log(response) */
                 const data = response.json()
                 if (!response.ok) {
                     return Promise.reject(`${response.status} ${response.statusText}`);
